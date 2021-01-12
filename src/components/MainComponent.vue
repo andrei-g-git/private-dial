@@ -9,6 +9,17 @@
             
             </BookmarkGroup>
 
+            <NewGroupModal v-bind:showing='showNewGroupModal' 
+                :saveName='saveGroupModal'
+                :closeName='closeGroupModal'
+                :allGroups='bookmarkGroups'
+                @clickedSave='closeNewFolderModal()'
+                @clickedClose='closeNewFolderModal()' 
+                v-show='showNewGroupModal'> <!-- clickedClose doesn't work forr some reason ... maybe it can't call the same method-->
+            </NewGroupModal>
+
+            <AddGroupButton @clickedAddGroup='onClickAddGroup()'></AddGroupButton>
+
         </div>
     </div>
 </template>
@@ -20,15 +31,23 @@ import BookmarkGroupModel from '@/js/BookmarkGroupModel.js'
 import AllBookmarkGroups from '@/js/AllBookmarkGroups.js'
 //import Bookmark from '@/components/Bookmark.vue'
 import BookmarkGroup from '@/components/BookmarkGroup.vue'
+import NewGroupModal from '@/components/NewGroupModal.vue'
+import AddGroupButton from '@/components/AddGroupButton.vue'
 
 export default {
     components: {
         //Bookmark,
-        BookmarkGroup
+        BookmarkGroup,
+        NewGroupModal,
+        AddGroupButton
     },
     data: function(){
         return {
-            bookmarkGroups: new AllBookmarkGroups()
+            bookmarkGroups: new AllBookmarkGroups(),
+            showNewGroupModal: false,
+            addGroupButtonName: 'Add Group',
+            saveGroupModal: 'Save',
+            closeGroupModal: 'Close'
         }
     },
     methods: {
@@ -41,6 +60,12 @@ export default {
             var newGroup = new BookmarkGroupModel(groupsLength);
             newGroup.setName(name);
             this.bookmarkGroups.pushGroup(newGroup);
+        },
+        onClickAddGroup: function(){
+            this.showNewGroupModal = true;
+        },
+        closeNewFolderModal: function(){
+            this.showNewGroupModal = false;
         }
     },
     created() {

@@ -26,4 +26,8 @@ export default class AllBookmarkGroups {
     getGroups(){
         return this.groups;
     }
+
+    getNameAt(index){
+        return this.groups[index].getName();
+    }
 }

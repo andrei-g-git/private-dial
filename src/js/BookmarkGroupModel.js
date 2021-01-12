@@ -1,6 +1,6 @@
 export default class BookmarkModelGroup {
 
-    name;
+    name; color;
 
     constructor(index){
         this.index = index;
@@ -12,6 +12,9 @@ export default class BookmarkModelGroup {
 
     getName(){return this.name;}
     setName(name){this.name = name;}
+
+    getColor(){return this.color;}
+    setColor(color){this.color = color;}
 
     getBookmarks(){return this.bookmarks;}
 
