@@ -1,0 +1,64 @@
+<template>
+    <div id='main-component'>
+        <div class='bookmark-group'
+            v-for='(group, index) in bookmarkGroups.getGroups()'
+            v-bind:key='index'
+            v-bind:id='index'>   
+            <BookmarkGroup 
+                v-bind:groupModel='group'>
+            
+            </BookmarkGroup>
+
+        </div>
+    </div>
+</template>
+
+<script>
+
+import BookmarkModel from '@/js/BookmarkModel.js'
+import BookmarkGroupModel from '@/js/BookmarkGroupModel.js'
+import AllBookmarkGroups from '@/js/AllBookmarkGroups.js'
+//import Bookmark from '@/components/Bookmark.vue'
+import BookmarkGroup from '@/components/BookmarkGroup.vue'
+
+export default {
+    components: {
+        //Bookmark,
+        BookmarkGroup
+    },
+    data: function(){
+        return {
+            bookmarkGroups: new AllBookmarkGroups()
+        }
+    },
+    methods: {
+        addBookmark: function(url, index){
+            var bookmark = new BookmarkModel(url);
+            this.bookmarkGroups.pushBookmarkAtGroupIndex(bookmark, index);
+        },
+        addGroup: function(name){
+            var groupsLength = this.bookmarkGroups.getLength();
+            var newGroup = new BookmarkGroupModel(groupsLength);
+            newGroup.setName(name);
+            this.bookmarkGroups.pushGroup(newGroup);
+        }
+    },
+    created() {
+        var defaultGroup = new BookmarkGroupModel(0);
+        defaultGroup.setName('Default');
+        this.bookmarkGroups.pushGroup(defaultGroup);
+
+/*         this.addGroup('misc');
+        this.addGroup('utilities');
+        this.addGroup('pupular'); */
+    }
+}
+</script>
+
+<style scoped>
+
+.bookmark-group{
+    display: inline-block;
+    margin: 10px;
+}
+</style>
