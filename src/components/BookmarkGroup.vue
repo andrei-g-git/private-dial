@@ -1,5 +1,6 @@
 <template>
-    <div id='balls' class='bookmark-group'> {{ groupName }} 
+    <div id='balls' class='bookmark-group'
+        style='background-color:gray;'> {{ groupName }} 
         <div class='bookmark-wrapper'
             v-for='(bookmark, index) in bookmarks'
             v-bind:key='index'>
@@ -19,7 +20,8 @@ export default {
     data: function(){
         return {
             bookmarks: null,
-            groupName: 'should change'
+            groupName: 'should change',
+            headerBackgroundColor: ''
         }
     },
     props: {
@@ -38,11 +40,22 @@ export default {
         this.groupName = this.groupModel.getName();
         this.bookmarks = this.groupModel.getBookmarks();
 
-        //alert(document.getElementById('balls').textContent); //apparently this makes the DOM to not be mounted or some shit... gettin null wrapper errors in the tests
+        this.headerBackgroundColor = this.groupModel.getColor();
+        //document.documentElement.style.setProperty('--group-background-color', this.headerBackgroundColor); 
+        var bookmarkGroupElement = document.getElementsByClassName('bookmark-group')[0];
+        bookmarkGroupElement.style['background-color'] = this.headerBackgroundColor;
     }
 }
 </script>
 
 <style scoped>
-
+/*     :root{
+        --group-background-color: gray;
+    } */
+    .bookmark-group{
+        text-align: center;
+        width: 200px;
+        border: solid 1px gray;
+        /* background: var(--group-background-color); */
+    }
 </style>

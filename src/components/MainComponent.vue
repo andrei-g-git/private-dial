@@ -8,19 +8,18 @@
                 v-bind:groupModel='group'>
             
             </BookmarkGroup>
-
-            <NewGroupModal v-bind:showing='showNewGroupModal' 
-                :saveName='saveGroupModal'
-                :closeName='closeGroupModal'
-                :allGroups='bookmarkGroups'
-                @clickedSave='closeNewFolderModal()'
-                @clickedClose='closeNewFolderModal()' 
-                v-show='showNewGroupModal'> <!-- clickedClose doesn't work forr some reason ... maybe it can't call the same method-->
-            </NewGroupModal>
-
-            <AddGroupButton @clickedAddGroup='onClickAddGroup()'></AddGroupButton>
-
         </div>
+        <NewGroupModal v-bind:showing='showNewGroupModal' 
+            :saveName='saveGroupModal'
+            :closeName='closeGroupModal'
+            :allGroups='bookmarkGroups'
+            @clickedSave='closeNewFolderModal()'
+            @clickedClose='closeNewFolderModal()' 
+            v-show='showNewGroupModal'> <!-- clickedClose doesn't work forr some reason ... maybe it can't call the same method-->
+        </NewGroupModal>
+
+        <AddGroupButton @clickedAddGroup='onClickAddGroup()'></AddGroupButton>
+
     </div>
 </template>
 
