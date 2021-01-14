@@ -1,7 +1,15 @@
 <template>
     <div :id='"bookmark-group-" + getGroupIndex()'
         class='bookmark-group'
-        style='background-color:white;'> {{ groupName }} 
+        style='background-color:white;'> <!-- {{ groupName }} -->
+        <div class='bookmark-button-wrapper'>
+            <AddStuffButton 
+                :buttonWidth='percentWidth'
+                :imageName='bookmarkButtonImgName'
+                @genericAddStuff='onClickAddBookmark()'>
+            </AddStuffButton> 
+        </div>
+        <p class='group-name'>{{ groupName }} </p>
         <div class='bookmark-wrapper'
             v-for='(bookmark, index) in bookmarks'
             v-bind:key='index'>
@@ -13,16 +21,20 @@
 <script>
 
 import Bookmark from '@/components/Bookmark.vue'
+import AddStuffButton from '@/components/AddStuffButton.vue'
 
 export default {
     components: {
-        Bookmark
+        Bookmark,
+        AddStuffButton
     },
     data: function(){
         return {
             bookmarks: null,
             groupName: 'should change',
-            headerBackgroundColor: ''
+            headerBackgroundColor: '',
+            bookmarkButtonImgName: 'new folder.png',
+            percentWidth: '30%'
         }
     },
     props: {
@@ -32,6 +44,9 @@ export default {
     methods: {
         getGroupIndex: function(){
             return this.groupModel.getIndex();
+        },
+        onClickAddBookmark: function(){
+            alert('added new bookmark')
         }
     },
     mounted(){
@@ -52,8 +67,29 @@ export default {
 
 <style scoped>
     .bookmark-group{
-        text-align: center;
+
         width: 200px;
         border: solid 1px gray;
+
+        display: inline-block;
+
+        position: relative;
+
+
+
+        /* display: flex;
+        align-items: baseline; */
+    }
+    .bookmark-button-wrapper{
+        position: absolute;
+        left: 0;
+        /* float: left; */ 
+        top: 50%;
+
+        width: 10%;
+        
+    }
+    .group-name{
+        text-align: center;
     }
 </style>

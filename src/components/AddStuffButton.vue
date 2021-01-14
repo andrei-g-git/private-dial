@@ -1,22 +1,34 @@
 <template>
     <div> 
         <img class='add-stuff-button'
-            :click='onClickButton()'
-            :src='buttonImageSrc'> 
-
-    </div>
+            
+            @click='onClickButton()'
+            :src='concatImage(imageName)'> 
+    </div><!-- 'concatWidth(buttonWidth)' --> <!-- width='buttonWidth' -->
 </template>
 
 <script>
 export default {
+    data: function(){
+        return{
+            affix: 'new folder.png'
+        }
+    },
     props: {
-        name: String,
-        eventName: String,
-        buttonImageSrc: String
+        imageName: String,
+        buttonWidth: String
     },
     methods: {
         onClickButton: function(){
-            this.$emit(this.eventName);
+            //this.$emit(this.eventName);
+            //this.emitterObject.emitEvent();
+            this.$emit('genericAddStuff');
+        },
+        concatImage: function(value){
+            return require('../assets/' + value);
+        },
+        concatWidth: function(value){
+            return require(value + '%')
         }
     }
 }
@@ -24,8 +36,7 @@ export default {
 
 <style scoped>
     .add-stuff-button{
-        width: 5%;
-        float: right;
+        width: 100%;
     }
     .add-stuff-button:hover{
         opacity: 0.7;

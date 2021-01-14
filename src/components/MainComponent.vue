@@ -17,11 +17,17 @@
             @clickedClose='closeNewFolderModal()' 
             v-show='showNewGroupModal'> <!-- clickedClose doesn't work forr some reason ... maybe it can't call the same method-->
         </NewGroupModal>
+        <div class='add-group-button-wrapper'>
+            <AddStuffButton 
+                :imageName='groupButtonImgName'
+                @genericAddStuff='onClickAddGroup()'>
+            </AddStuffButton> 
+        </div>
+                    <!-- v-on:[addStuffButtonEvent]='onClickAddGroup()'> -->
+            <!-- v-on='{ click: onClickAddGroup()}'> -->
+            <!-- @clickedAddGroup='onClickAddGroup()'></AddStuffButton> -->
 
-        <AddStuffButton 
-            :buttonImageSrc='groupButtonSrc'
-            :eventName='groupButtonEmitterName'
-            @clickedAddGroup='onClickAddGroup()'></AddStuffButton>
+            <!-- :eventName='groupButtonEmitterName' --> <!-- :emitterObject='newGroupEmitterObject' --> 
 
     </div>
 </template>
@@ -35,13 +41,14 @@ import AllBookmarkGroups from '@/js/AllBookmarkGroups.js'
 import BookmarkGroup from '@/components/BookmarkGroup.vue'
 import NewGroupModal from '@/components/NewGroupModal.vue'
 import AddStuffButton from '@/components/AddStuffButton.vue'
+//import AddGroupEmitter from '@/js/AddGroupEmitter.js'
 
 export default {
     components: {
         //Bookmark,
         BookmarkGroup,
         NewGroupModal,
-        AddStuffButton
+        AddStuffButton //is this an instance?...
     },
     data: function(){
         return {
@@ -50,8 +57,9 @@ export default {
             addGroupButtonName: 'Add Group',
             saveGroupModal: 'Save',
             closeGroupModal: 'Close',
-            groupButtonEmitterName: 'clickedAddGroup',
-            groupButtonSrc: '../assets/new folder.png'
+            //groupButtonEmitterName: 'clickedAddGroup',
+            groupButtonImgName: /* '../assets/ */'new folder.png',
+            newGroupEmitterObject: null
         }
     },
     methods: {
@@ -67,6 +75,7 @@ export default {
         },
         onClickAddGroup: function(){
             this.showNewGroupModal = true;
+            alert('clicked new group')
         },
         closeNewFolderModal: function(){
             this.showNewGroupModal = false;
@@ -79,13 +88,16 @@ export default {
         defaultGroup.setDefault(true);
         this.bookmarkGroups.pushGroup(defaultGroup);
 
+        //this.newGroupEmitterObject = new AddGroupEmitter(AddStuffButton);
+
+
 /*         this.addGroup('misc');
         this.addGroup('utilities');
         this.addGroup('pupular'); */
     }
 
 
-    /* fixed forms not resetting */
+    /* fixed forms not resetting; also tried to replace add group button with universal one but I can't emit variable names... */
 }
 </script>
 
@@ -94,6 +106,10 @@ export default {
 .bookmark-group-wrapper{
     display: inline-block;
     margin: 10px;
+}
+.add-group-button-wrapper{
+        width: 5%;
+        float: right;
 }
 </style>
 
