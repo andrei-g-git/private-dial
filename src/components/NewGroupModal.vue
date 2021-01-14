@@ -25,7 +25,6 @@ import BookmarkGroupModel from '@/js/BookmarkGroupModel.js'
 
 export default {
     props: {
-        //showing: Boolean, //toggling from parent now
         allGroups: Object, 
         saveName: String,
         closeName: String
@@ -36,26 +35,26 @@ export default {
             var newGroup = new BookmarkGroupModel(groupsLength);
 
             var name = document.getElementsByClassName('name-field')[0].value; 
-            newGroup.setName(name);
             var color = document.getElementById('color-field').value;
-            newGroup.setColor(color);
-            this.allGroups.pushGroup(newGroup);
+            if((name.length > 0) || (color.length > 0)){
+                newGroup.setName(name);
+                newGroup.setColor(color);
+                this.allGroups.pushGroup(newGroup);
+                this.$emit('clickedSave');
 
-            this.$emit('clickedSave');
-            //this.showing = false;
+                this.resetForms();
+            } else {
+                alert('Name and color must be at least 1 character long.');
+            }
         },
         onClose: function(){
-            document.getElementsByClassName('name-field')[0].reset();
-            document.getElementById('color-field').reset();
-
+            this.resetForms();
             this.$emit('clickedClose');
-            //this.showing = false;
+        },
+        resetForms: function(){
+            document.getElementsByClassName('name-field')[0].value = '';
+            document.getElementById('color-field').value = '';
         }
-    },
-    mounted(){
-        //this.showing = false; /////////////////////////////
-
-        //this.onSave();
     }
 }
 </script>

@@ -34,8 +34,7 @@ export default {
             return this.groupModel.getIndex();
         }
     },
-    //mounted(){
-    beforeMount(){
+    mounted(){
         this.groupName = this.groupModel.getName();
         this.bookmarks = this.groupModel.getBookmarks();
 
@@ -45,7 +44,7 @@ export default {
         bookmarkGroupElement.style['background-color'] = this.headerBackgroundColor; //I THINK THAT IF I CHANGE THE STYLE DYNAMICALLY THEN THE COMPONENT I SHALLOWMOUNT
                                                                                 //INTO THE TEST BECOMES INVALID AND THE ENTIRE THING STARTS FAILING WITH 
                                                                                 //'CANNOT READ PROPERTY {WHATEVER} OF NULL
-                                                                                //maybe it should be in teh created hook?
+                                                                                //maybe it should be in the created hook? -- won't set the color then
 
     }
 }

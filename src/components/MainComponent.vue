@@ -18,7 +18,10 @@
             v-show='showNewGroupModal'> <!-- clickedClose doesn't work forr some reason ... maybe it can't call the same method-->
         </NewGroupModal>
 
-        <AddGroupButton @clickedAddGroup='onClickAddGroup()'></AddGroupButton>
+        <AddStuffButton 
+            :buttonImageSrc='groupButtonSrc'
+            :eventName='groupButtonEmitterName'
+            @clickedAddGroup='onClickAddGroup()'></AddStuffButton>
 
     </div>
 </template>
@@ -31,14 +34,14 @@ import AllBookmarkGroups from '@/js/AllBookmarkGroups.js'
 //import Bookmark from '@/components/Bookmark.vue'
 import BookmarkGroup from '@/components/BookmarkGroup.vue'
 import NewGroupModal from '@/components/NewGroupModal.vue'
-import AddGroupButton from '@/components/AddGroupButton.vue'
+import AddStuffButton from '@/components/AddStuffButton.vue'
 
 export default {
     components: {
         //Bookmark,
         BookmarkGroup,
         NewGroupModal,
-        AddGroupButton
+        AddStuffButton
     },
     data: function(){
         return {
@@ -46,7 +49,9 @@ export default {
             showNewGroupModal: false,
             addGroupButtonName: 'Add Group',
             saveGroupModal: 'Save',
-            closeGroupModal: 'Close'
+            closeGroupModal: 'Close',
+            groupButtonEmitterName: 'clickedAddGroup',
+            groupButtonSrc: '../assets/new folder.png'
         }
     },
     methods: {
@@ -78,6 +83,9 @@ export default {
         this.addGroup('utilities');
         this.addGroup('pupular'); */
     }
+
+
+    /* fixed forms not resetting */
 }
 </script>
 
@@ -88,3 +96,7 @@ export default {
     margin: 10px;
 }
 </style>
+
+
+
+
