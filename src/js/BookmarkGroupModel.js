@@ -1,6 +1,6 @@
 export default class BookmarkModelGroup {
 
-    name; color;
+    name; color; default = false;
 
     constructor(index){
         this.index = index;
@@ -15,6 +15,9 @@ export default class BookmarkModelGroup {
 
     getColor(){return this.color;}
     setColor(color){this.color = color;}
+
+    isDefault(){return this.default;}
+    setDefault(bool){this.default = bool;}
 
     getBookmarks(){return this.bookmarks;}
 

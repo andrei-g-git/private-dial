@@ -1,6 +1,7 @@
 <template>
-    <div id='balls' class='bookmark-group'
-        style='background-color:gray;'> {{ groupName }} 
+    <div :id='"bookmark-group-" + getGroupIndex()'
+        class='bookmark-group'
+        style='background-color:white;'> {{ groupName }} 
         <div class='bookmark-wrapper'
             v-for='(bookmark, index) in bookmarks'
             v-bind:key='index'>
@@ -29,33 +30,31 @@ export default {
         groupModel: Object //these vue components will also have to act as controllers becuase they are easier to test that way, can't separate view from controller
     },
     methods: {
-/*         getPassedName(){
-            return this.groupName = this.groupModel.getName();
-        },
-        getBookmarks(){
-            return this.bookmarks = this.groupModel.getBookmarks();
-        } */
+        getGroupIndex: function(){
+            return this.groupModel.getIndex();
+        }
     },
-    mounted(){
+    //mounted(){
+    beforeMount(){
         this.groupName = this.groupModel.getName();
         this.bookmarks = this.groupModel.getBookmarks();
 
+        var index = this.groupModel.getIndex();
         this.headerBackgroundColor = this.groupModel.getColor();
-        //document.documentElement.style.setProperty('--group-background-color', this.headerBackgroundColor); 
-        var bookmarkGroupElement = document.getElementsByClassName('bookmark-group')[0];
-        bookmarkGroupElement.style['background-color'] = this.headerBackgroundColor;
+        var bookmarkGroupElement = document.getElementById('bookmark-group-' + index); //should test if index matches id number affix but that's white box shit...
+        bookmarkGroupElement.style['background-color'] = this.headerBackgroundColor; //I THINK THAT IF I CHANGE THE STYLE DYNAMICALLY THEN THE COMPONENT I SHALLOWMOUNT
+                                                                                //INTO THE TEST BECOMES INVALID AND THE ENTIRE THING STARTS FAILING WITH 
+                                                                                //'CANNOT READ PROPERTY {WHATEVER} OF NULL
+                                                                                //maybe it should be in teh created hook?
+
     }
 }
 </script>
 
 <style scoped>
-/*     :root{
-        --group-background-color: gray;
-    } */
     .bookmark-group{
         text-align: center;
         width: 200px;
         border: solid 1px gray;
-        /* background: var(--group-background-color); */
     }
 </style>

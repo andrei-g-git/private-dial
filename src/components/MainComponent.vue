@@ -1,6 +1,6 @@
 <template>
     <div id='main-component'>
-        <div class='bookmark-group'
+        <div class='bookmark-group-wrapper'
             v-for='(group, index) in bookmarkGroups.getGroups()'
             v-bind:key='index'
             v-bind:id='index'>   
@@ -70,6 +70,8 @@ export default {
     created() {
         var defaultGroup = new BookmarkGroupModel(0);
         defaultGroup.setName('Default');
+        defaultGroup.setColor('lightgray');
+        defaultGroup.setDefault(true);
         this.bookmarkGroups.pushGroup(defaultGroup);
 
 /*         this.addGroup('misc');
@@ -81,7 +83,7 @@ export default {
 
 <style scoped>
 
-.bookmark-group{
+.bookmark-group-wrapper{
     display: inline-block;
     margin: 10px;
 }
