@@ -27,7 +27,7 @@ describe( 'NewGroupModal',() => {
         wrapper = shallowMount(NewGoroupModal, {
             propsData: {
                 allGroups: new AllBookmarkGroupsMOCK(),
-                showing: true
+                //showing: true
             }
         });
         expect(wrapper.vm.allGroups.getLength()).toBe(0);
@@ -48,7 +48,7 @@ describe( 'NewGroupModal',() => {
         //expect(wrappepr.vm.) nah...                                                            
     });
 
-    it('closes when click save or close and resets', async () => {
+/*     it('closes when click save or close and resets', async () => {          -------- no longer handles v-show
         wrapper = shallowMount(NewGoroupModal, {
             propsData: {
                 allGroups: new AllBookmarkGroupsMOCK(),
@@ -59,14 +59,14 @@ describe( 'NewGroupModal',() => {
         await button.trigger('click');
         expect(wrapper.vm.showing).toBe(false);
 
-        await wrapper.setProps({showing: false});
+        await wrapper.setProps({showing: false}); //??
 
         button = wrapper.find('.close-button');
         await button.trigger('click');
         expect(wrapper.vm.showing).toBe(false);
 
         //fails on elementById.reset() like the above test so I can't test if it resets...
-    });
+    }); */
 });
 
 class BookmarkGroupModelMOCK{

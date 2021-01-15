@@ -75,7 +75,6 @@ export default {
         },
         onClickAddGroup: function(){
             this.showNewGroupModal = true;
-            alert('clicked new group')
         },
         closeNewFolderModal: function(){
             this.showNewGroupModal = false;

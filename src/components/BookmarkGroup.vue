@@ -46,7 +46,7 @@ export default {
             return this.groupModel.getIndex();
         },
         onClickAddBookmark: function(){
-            alert('added new bookmark')
+            //alert('added new bookmark')
         }
     },
     mounted(){

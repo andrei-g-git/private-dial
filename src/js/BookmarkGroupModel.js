@@ -25,6 +25,9 @@ export default class BookmarkModelGroup {
         this.bookmarks.push(bookmark);
     }
 
+    getLength(){
+        return this.bookmarks.length;
+    }
     spliceBookmarks(bookmark){
         this.bookmarks.splice(bookmark, 1);
     }
