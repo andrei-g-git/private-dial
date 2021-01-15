@@ -17,18 +17,23 @@ import BookmarkModel from '@/js/BookmarkModel.js';
 
 export default {
     props:{
-        bookmarkGroup: Object,
+        bookmarkGroup: Object /* Array, */
         //showing: Boolean    ----doesn't handle v-show
     },
     methods:{
         onSave: function(){
+     
             //var ulrs = document.getElementsByClassName('url-field');
             //var urls = document.querySelectorAll(".url-field");
             //var url = urls[0].value;
             var url = document.getElementById('url-field');
-            this.bookmarkGroup.pushBookmark(new BookmarkModel(url.value));
+            var poop = url.value;
+            this.bookmarkGroup.pushBookmark(new BookmarkModel(poop));
+
+            this.$emit('clickedSaveBookmark');
 
             this.resetForms(url);
+            
         },
         resetForms: function(element){
             //document.getElementById('url-field').value = ''; //Cannot set property 'value' of null ??????????????????????

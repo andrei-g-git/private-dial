@@ -8,8 +8,8 @@
                 v-bind:groupModel='group'>
             
             </BookmarkGroup>
-        </div>
-        <NewGroupModal v-bind:showing='showNewGroupModal' 
+        </div> <!-- v-bind:showing='showNewGroupModal' -->
+        <NewGroupModal  
             :saveName='saveGroupModal'
             :closeName='closeGroupModal'
             :allGroups='bookmarkGroups'

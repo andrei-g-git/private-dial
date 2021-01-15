@@ -46,6 +46,11 @@ describe('BookmarkGroup', () => {
         var bgColor = testGroup.attributes().style.color;
         expect(bgColor).toBe('red');
     });
+
+    it('toggles modal visibility prop on', async () => {
+        await wrapper.vm.$emit('genericAddStuff');
+        expect(wrapper.vm.showNewBookmarkModal).toBe(true);
+    });
 });
 
 
