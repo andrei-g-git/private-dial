@@ -11,28 +11,27 @@
                 </AddStuffButton>
             </div>
             <p class="group-name">{{ groupName }}</p>
-<!--             <div class="bookmark-wrapper"
-                v-for="(bookmark, index) in bookmarks.getBookmarks()"
-                v-bind:key="index" >
-                <div class='bookmark-wrapper'> ????????????????????????????
-                    <Bookmark 
-                        :bookmarkModel="bookmark"> 
-                    </Bookmark>
-                </div> ????????????????????????????
-            </div> -->
             <NewBookmarkModal
                 v-show="showNewBookmarkModal"
                 :bookmarkGroup="bookmarks"
-                @clickedSaveBookmark="closeNewBookmarkModal()">
+                @clickedSaveBookmark="closeNewBookmarkModal()"
+                :saveBookmarkName='saveBookmarkButtonName'>
             </NewBookmarkModal>
         </div>
         <div class="bookmark-wrapper"
             v-for="(bookmark, index) in bookmarks.getBookmarks()"
-            v-bind:key="index" >
+            v-bind:key="index"
+            v-bind:id='"bookmark" + getBookmarkIndex(bookmark)'
+            v-on:click.right='openBookmarkContext(bookmark) ; 
+                              recordBookmark(bookmark)'>
             <Bookmark 
                 :bookmarkModel="bookmark"> 
             </Bookmark>
         </div>
+        <BookmarkContextMenu 
+            v-show='showContext'
+            v-on:clickedDeleteBookmarkMenuItem='deleteBookmark(getRightClickedBookmark())'>
+        </BookmarkContextMenu> 
     </div>
 </template>
 
@@ -40,12 +39,14 @@
 import Bookmark from "@/components/Bookmark.vue";
 import AddStuffButton from "@/components/AddStuffButton.vue";
 import NewBookmarkModal from "@/components/NewBookmarkModal.vue";
+import BookmarkContextMenu from "@/components/BookmarkContextMenu.vue";
 
 export default {
   components: {
     Bookmark,
     AddStuffButton,
     NewBookmarkModal,
+    BookmarkContextMenu
   },
   data: function () {
     return {
@@ -55,11 +56,14 @@ export default {
       bookmarkButtonImgName: "new folder.png",
       percentWidth: "30%",
       showNewBookmarkModal: false,
+      saveBookmarkButtonName: 'Save',
+      showContext: false,
+      rightClickedBookmark: null
     };
   },
   props: {
     //groupName: String, //might not need to be a prop
-    groupModel: Object, //these vue components will also have to act as controllers becuase they are easier to test that way, can't separate view from controller
+    groupModel: Object //these vue components will also have to act as controllers becuase they are easier to test that way, can't separate view from controller
   },
   methods: {
     getGroupIndex: function () {
@@ -72,6 +76,36 @@ export default {
     closeNewBookmarkModal: function () {
       this.showNewBookmarkModal = false;
     },
+    deleteBookmark: function(bookmarkObject){
+      this.bookmarks.getBookmarks().splice(this.getBookmarkIndex(bookmarkObject), 1);
+      var abc = this.bookmarks.getBookmarks();
+      console.log(abc);
+    },
+    openBookmarkContext(bookmarkObject){
+      var menu = document.querySelector('#bookmark-context-menu');
+      var bookmarkItem = document.getElementById("bookmark" + this.getBookmarkIndex(bookmarkObject));
+      bookmarkItem.addEventListener('contextmenu', event =>{
+        event.preventDefault();
+        this.showContext = true;
+
+        menu.style.top = event.clientY;
+        menu.style.left = event.clientX;
+      })
+      // eslint-disable-next-line no-unused-vars
+      menu.addEventListener('mouseleave', event =>{
+        this.showContext = false;
+        this.rightClickedBookmark = null;
+      })
+    },
+    getBookmarkIndex: function(bookmark){
+      return this.bookmarks.getBookmarks().indexOf(bookmark);
+    },
+    recordBookmark: function(bookmark){
+      this.rightClickedBookmark = bookmark;
+    },
+    getRightClickedBookmark: function(){
+      return this.rightClickedBookmark;
+    }
   },
   beforeMount() {
     this.groupName = this.groupModel.getName();
@@ -83,15 +117,18 @@ export default {
 
     var index = this.groupModel.getIndex();
     this.headerBackgroundColor = this.groupModel.getColor();
-    var bookmarkGroupElement = document.getElementById(
-      "bookmark-group-" + index
-    ); //should test if index matches id number affix but that's white box shit...
-    bookmarkGroupElement.style["background-color"] = this.headerBackgroundColor; //I THINK THAT IF I CHANGE THE STYLE DYNAMICALLY THEN THE COMPONENT I SHALLOWMOUNT
+
+
+    var bookmarkGroupElement = document.getElementById("bookmark-group-" + index); 
+    bookmarkGroupElement.style["background-color"] = this.headerBackgroundColor;  //   #### COMMENT OUT WHEN TESTING ###
+    
+    
+    //I THINK THAT IF I CHANGE THE STYLE DYNAMICALLY THEN THE COMPONENT I SHALLOWMOUNT
     //INTO THE TEST BECOMES INVALID AND THE ENTIRE THING STARTS FAILING WITH
     //'CANNOT READ PROPERTY {WHATEVER} OF NULL
     //maybe it should be in the created hook? -- won't set the color then
-  },
-};
+  }
+}
 </script>
 
 <style scoped>

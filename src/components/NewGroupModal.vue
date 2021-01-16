@@ -3,7 +3,8 @@
         <div class='new-group-modal'> 
             <p>Name this tab group</p>
             <input type='text' 
-                class='name-field'> 
+                class='name-field'
+                id='name-field'> 
             <p>Choose a color or hex</p>
             <input type='text'
                 id='color-field'
@@ -34,7 +35,8 @@ export default {
             var groupsLength = this.allGroups.getLength();
             var newGroup = new BookmarkGroupModel(groupsLength);
 
-            var name = document.getElementsByClassName('name-field')[0].value; 
+            //var name = document.getElementsByClassName('name-field')[0].value; 
+            var name = document.getElementById('name-field').value;
             var color = document.getElementById('color-field').value;
             if((name.length > 0) || (color.length > 0)){
                 newGroup.setName(name);

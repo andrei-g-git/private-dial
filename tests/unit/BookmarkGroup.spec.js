@@ -34,22 +34,29 @@ describe('BookmarkGroup', () => {
     });
 
     it('rednders the bk color stored in the model', async () => {
-        wrapper.destroy();
+        /* wrapper.destroy();
+        let wrapper = null; */
         var model = new BookmarkGroupModelMOCK(0);
         model.setColor('red');
-        wrappepr = shallowMount(BookmarkGroup, {
+        /* wrappepr = shallowMount(BookmarkGroup, {
             propsData: {
                 groupModel: model
             }
+        }); */
+
+        wrapper.setProps({
+            groupModel: model
         });
+
         var testGroup = await wrapper.find('#bookmark-group-0');
         var bgColor = testGroup.attributes().style.color;
-        expect(bgColor).toBe('red');
+        expect(bgColor).toBe('red'); //this fails because I commented out the part where I reassing the color in the implementation because that causes the 
+                            //test to see the wrappepr as null
     });
 
     it('toggles modal visibility prop on', async () => {
         await wrapper.vm.$emit('genericAddStuff');
-        expect(wrapper.vm.showNewBookmarkModal).toBe(true);
+        expect(wrapper.vm.showNewBookmarkModal).toBe(true); //doesn't work
     });
 });
 
@@ -63,11 +70,15 @@ class BookmarkModelMOCK{
     }
 }
 class BookmarkGroupModelMOCK{ //apparently when you mess these up and you call a function or property that doesn't exist the whole wrapper parent fails to mount and it's null
-    name; color; default = false;
+    //name; color; default = false;    --nope can't do this, not Java (or any other civilized language)
 
     constructor(index){
         this.index = index;
         this.bookmarks = new Array();
+        
+        this.name = "";
+        this.color = "";
+        this.default = false; 
     }
 
     getIndex(){return this.index;}
