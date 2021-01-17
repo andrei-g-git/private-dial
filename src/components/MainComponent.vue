@@ -13,7 +13,8 @@
             :saveName='saveGroupModal'
             :closeName='closeGroupModal'
             :allGroups='bookmarkGroups'
-            @clickedSave='closeNewFolderModal()'
+            @clickedSave='closeNewFolderModal() ;
+                savePrettyMuchEverything()'
             @clickedClose='closeNewFolderModal()' 
             v-show='showNewGroupModal'> <!-- clickedClose doesn't work forr some reason ... maybe it can't call the same method-->
         </NewGroupModal>
@@ -42,6 +43,7 @@ import BookmarkGroup from '@/components/BookmarkGroup.vue'
 import NewGroupModal from '@/components/NewGroupModal.vue'
 import AddStuffButton from '@/components/AddStuffButton.vue'
 //import AddGroupEmitter from '@/js/AddGroupEmitter.js'
+import SaverAndLoader from '@/js/SaverAndLoader.js'
 
 export default {
     components: {
@@ -59,7 +61,8 @@ export default {
             closeGroupModal: 'Close',
             //groupButtonEmitterName: 'clickedAddGroup',
             groupButtonImgName: /* '../assets/ */'new folder.png',
-            newGroupEmitterObject: null
+            newGroupEmitterObject: null,
+            saverAndLoader: new SaverAndLoader()
         }
     },
     methods: {
@@ -78,21 +81,25 @@ export default {
         },
         closeNewFolderModal: function(){
             this.showNewGroupModal = false;
+        },
+        savePrettyMuchEverything: function(){
+            this.saverAndLoader.saveObject('bookmarkGroups', this.bookmarkGroups);
+        },
+        loadPrettyMuchEverything: function(){
+            return this.saverAndLoader.loadObject('bookmarkGroups');
         }
     },
     created() {
-        var defaultGroup = new BookmarkGroupModel(0);
-        defaultGroup.setName('Default');
-        defaultGroup.setColor('lightgray');
-        defaultGroup.setDefault(true);
-        this.bookmarkGroups.pushGroup(defaultGroup);
-
-        //this.newGroupEmitterObject = new AddGroupEmitter(AddStuffButton);
-
-
-/*         this.addGroup('misc');
-        this.addGroup('utilities');
-        this.addGroup('pupular'); */
+        if(this.bookmarkGroups.getLength() === 0){
+            var defaultGroup = new BookmarkGroupModel(0);
+            defaultGroup.setName('Default');
+            defaultGroup.setColor('lightgray');
+            defaultGroup.setDefault(true);
+            this.bookmarkGroups.pushGroup(defaultGroup);
+        } else {
+            this.bookmarkGroups = this.loadPrettyMuchEverything(); // ######### Not Working ########## Also I have to trigger the save function in the 
+                                                                    // bookmark modal as well and use that thing where it emits the event to the grandparent
+        }
     }
 
 

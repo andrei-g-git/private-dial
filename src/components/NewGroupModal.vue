@@ -38,7 +38,7 @@ export default {
             //var name = document.getElementsByClassName('name-field')[0].value; 
             var name = document.getElementById('name-field').value;
             var color = document.getElementById('color-field').value;
-            if((name.length > 0) || (color.length > 0)){
+            if((name.length > 0) || (color.length > 0)){ // ############### SHOULD BE IN THE BOOKMARK MODAL TOO ###############
                 newGroup.setName(name);
                 newGroup.setColor(color);
                 this.allGroups.pushGroup(newGroup);

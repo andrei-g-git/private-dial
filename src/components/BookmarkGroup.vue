@@ -23,7 +23,8 @@
             v-bind:key="index"
             v-bind:id='"bookmark" + getBookmarkIndex(bookmark)'
             v-on:click.right='openBookmarkContext(bookmark) ; 
-                              recordBookmark(bookmark)'>
+                              recordBookmark(bookmark)'> <!-- The model seems to retain the correct bookmarks after one's deletion but this loop renders an incorect list... -->
+                                                    <!-- I'm guessing it has something to do with the index not changing correctly? -->
             <Bookmark 
                 :bookmarkModel="bookmark"> 
             </Bookmark>
@@ -79,6 +80,7 @@ export default {
     deleteBookmark: function(bookmarkObject){
       this.bookmarks.getBookmarks().splice(this.getBookmarkIndex(bookmarkObject), 1);
       var abc = this.bookmarks.getBookmarks();
+      this.rightClickedBookmark = null; //should be here as well
       console.log(abc);
     },
     openBookmarkContext(bookmarkObject){
@@ -94,7 +96,7 @@ export default {
       // eslint-disable-next-line no-unused-vars
       menu.addEventListener('mouseleave', event =>{
         this.showContext = false;
-        this.rightClickedBookmark = null;
+        this.rightClickedBookmark = null; //this might reset the clicked bookmark before a menu item is clicked
       })
     },
     getBookmarkIndex: function(bookmark){

@@ -22,19 +22,17 @@ export default {
     },
     methods:{
         onSave: function(){
-     
-            //var ulrs = document.getElementsByClassName('url-field');
-            //var urls = document.querySelectorAll(".url-field");
-            //var url = urls[0].value;
+
             var url = document.getElementById('url-field');
-            var poop = url.value;
-            this.bookmarkGroup.pushBookmark(new BookmarkModel(poop));
+            var urlName = url.value;
 
-            this.$emit('clickedSaveBookmark');
-
-            this.resetForms(url);
-            
-            //alert('reset forms');
+            if(urlName.length > 0){
+                this.bookmarkGroup.pushBookmark(new BookmarkModel(urlName));
+                this.$emit('clickedSaveBookmark');
+                this.resetForms(url);
+            } else {
+                alert('The url must be at least 1 character long.')
+            }
         },
         resetForms: function(element){
             //document.getElementById('url-field').value = ''; //Cannot set property 'value' of null ??????????????????????
