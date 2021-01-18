@@ -85,25 +85,42 @@ export default {
         savePrettyMuchEverything: function(){
             this.saverAndLoader.saveObject('bookmarkGroups', this.bookmarkGroups);
         },
-        loadPrettyMuchEverything: function(){
-            return this.saverAndLoader.loadObject('bookmarkGroups');
-        }
+        loadPrettyMuchEverything: function(){ //this is bullshit I should't have to do this I went to harvard
+            var allGroupsPlaceholder = new AllBookmarkGroups();
+            var loadedGroupsData = this.saverAndLoader.loadObject('bookmarkGroups');
+            for(var i = 0; i < loadedGroupsData.groups.length; i++){
+                var loadedGroup = loadedGroupsData.groups[i];
+                var groupPlaceholder = new BookmarkGroupModel(i);
+                groupPlaceholder.setName(loadedGroup.name);
+                groupPlaceholder.setColor(loadedGroup.color);
+                groupPlaceholder.setDefault(loadedGroup.default);
+
+                for(var j = 0; j < loadedGroup.bookmarks.length; j++){
+                    var loadedBookmark = loadedGroup.bookmarks[j];
+                    var url = loadedBookmark.enteredUrl;
+                    var bookmarkPlaceholder = new BookmarkModel(url);
+                    loadedGroup.pushBookmark(bookmarkPlaceholder);
+                }
+
+                allGroupsPlaceholder.pushGroup(groupPlaceholder);  
+            }
+            return allGroupsPlaceholder;
+        },
     },
     created() {
-        if(this.bookmarkGroups.getLength() === 0){
-            var defaultGroup = new BookmarkGroupModel(0);
-            defaultGroup.setName('Default');
-            defaultGroup.setColor('lightgray');
-            defaultGroup.setDefault(true);
-            this.bookmarkGroups.pushGroup(defaultGroup);
-        } else {
-            this.bookmarkGroups = this.loadPrettyMuchEverything(); // ######### Not Working ########## Also I have to trigger the save function in the 
-                                                                    // bookmark modal as well and use that thing where it emits the event to the grandparent
-        }
+        var defaultGroup = new BookmarkGroupModel(0);
+        defaultGroup.setName('Default');
+        defaultGroup.setColor('lightgray');
+        defaultGroup.setDefault(true);
+        this.bookmarkGroups.pushGroup(defaultGroup);
+
+        var loaded = this.loadPrettyMuchEverything();
+        if(loaded.getLength()){ //i m already doing this in the object, should remove the redundancy
+            this.bookmarkGroups = loaded; // I also have to trigger the save function in the 
+        }                                   // bookmark modal as well and use that thing where it emits the event to the grandparent
+        alert(loaded + "   " + loaded.getLength());                                                       
+
     }
-
-
-    /* fixed forms not resetting; also tried to replace add group button with universal one but I can't emit variable names... */
 }
 </script>
 

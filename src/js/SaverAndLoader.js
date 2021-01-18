@@ -35,7 +35,7 @@ export default class SaverAndLoader{
         return actualValue;
     }
 
-    saveObject(key, object){
+    saveObject(key, object){ //this only saves the data structure, omits the functions and other complexities because json can't easily process that...
         var jsonData = JSON.stringify(object);
         localStorage.setItem(key, jsonData);
     }
