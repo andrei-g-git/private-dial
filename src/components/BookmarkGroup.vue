@@ -8,15 +8,18 @@
                     :buttonWidth="percentWidth"
                     :imageName="bookmarkButtonImgName"
                     @genericAddStuff="onClickAddBookmark()">
+                    <!-- v-on="$listeners"> --> <!-- middleman between grandchild to grandparent -->
+                    <!-- @genericAddStuff="onClickAddBookmark()"> -->
                 </AddStuffButton>
             </div>
-            <p class="group-name">{{ groupName }}</p>
-            <NewBookmarkModal
+            <p class="group-name">{{ groupName }}</p> <!--  -->
+<!--             <NewBookmarkModal
                 v-show="showNewBookmarkModal"
                 :bookmarkGroup="bookmarks"
-                @clickedSaveBookmark="closeNewBookmarkModal()"
+                @clickedSaveBookmark="closeNewBookmarkModal() ;
+                    notifyMainToSave()"
                 :saveBookmarkName='saveBookmarkButtonName'>
-            </NewBookmarkModal>
+            </NewBookmarkModal> --> <!-- not unique, each group has this, shouldn't be here -->
         </div>
         <div class="bookmark-wrapper"
             v-for="(bookmark, index) in bookmarks.getBookmarks()"
@@ -25,6 +28,8 @@
             v-on:click.right='openBookmarkContext(bookmark) ; 
                               recordBookmark(bookmark)'> <!-- The model seems to retain the correct bookmarks after one's deletion but this loop renders an incorect list... -->
                                                     <!-- I'm guessing it has something to do with the index not changing correctly? -->
+
+                                                    <!-- INDEXES ARE GLOBAL so indexes from different groups will overlap (but I doubt that was causing the problem) -->
             <Bookmark 
                 :bookmarkModel="bookmark"> 
             </Bookmark>
@@ -32,21 +37,21 @@
         <BookmarkContextMenu 
             v-show='showContext'
             v-on:clickedDeleteBookmarkMenuItem='deleteBookmark(getRightClickedBookmark())'>
-        </BookmarkContextMenu> 
+        </BookmarkContextMenu> <!-- not unique, each group has this, shouldn't be here -->
     </div>
 </template>
 
 <script>
 import Bookmark from "@/components/Bookmark.vue";
 import AddStuffButton from "@/components/AddStuffButton.vue";
-import NewBookmarkModal from "@/components/NewBookmarkModal.vue";
+//import NewBookmarkModal from "@/components/NewBookmarkModal.vue";
 import BookmarkContextMenu from "@/components/BookmarkContextMenu.vue";
 
 export default {
   components: {
     Bookmark,
     AddStuffButton,
-    NewBookmarkModal,
+    //NewBookmarkModal,
     BookmarkContextMenu
   },
   data: function () {
@@ -72,16 +77,16 @@ export default {
     },
     onClickAddBookmark: function () {
       //alert('added new bookmark')
-      this.showNewBookmarkModal = true;
+      //this.showNewBookmarkModal = true;
+      this.$emit('clickedAddBookmark', this.groupModel.getIndex());
     },
-    closeNewBookmarkModal: function () {
+/*     closeNewBookmarkModal: function () {
       this.showNewBookmarkModal = false;
-    },
+    }, */
     deleteBookmark: function(bookmarkObject){
       this.bookmarks.getBookmarks().splice(this.getBookmarkIndex(bookmarkObject), 1);
-      var abc = this.bookmarks.getBookmarks();
       this.rightClickedBookmark = null; //should be here as well
-      console.log(abc);
+      this.$emit('deletedBookmark');
     },
     openBookmarkContext(bookmarkObject){
       var menu = document.querySelector('#bookmark-context-menu');
@@ -107,7 +112,10 @@ export default {
     },
     getRightClickedBookmark: function(){
       return this.rightClickedBookmark;
-    }
+    },
+/*     notifyMainToSave: function(){
+      this.$emit('performedSavableAction');
+    } */
   },
   beforeMount() {
     this.groupName = this.groupModel.getName();

@@ -3,7 +3,7 @@
         <div class='new-bookmark-modal'>
             <p>Enter full website URL</p>
             <input type='text'
-                id='url-field'>
+                :id="'url-field-' + this.groupIndex">
             <button class='save-bookmark-button'
                 @click='onSave()'> {{ saveBookmarkName }}
             </button>
@@ -18,12 +18,13 @@ import BookmarkModel from '@/js/BookmarkModel.js';
 export default {
     props:{
         bookmarkGroup: Object,
-        saveBookmarkName: String
+        saveBookmarkName: String,
+        groupIndex: Number
     },
     methods:{
         onSave: function(){
 
-            var url = document.getElementById('url-field');
+            var url = document.getElementById('url-field-' + this.groupIndex); //what happens here is that each group opens it's own modal so this ID is not unique...
             var urlName = url.value;
 
             if(urlName.length > 0){
