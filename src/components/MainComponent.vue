@@ -144,8 +144,11 @@ export default {
             }); */
                 this.showContext = true;
 
-                menu.style.top = event.clientY;
-                menu.style.left = event.clientX;
+                menu.style.top = event.clientY + "px";
+                menu.style.left = event.clientX + "px";
+
+                //test
+                console.log(menu.style.top.value + "     " + menu.style.left.value);
         },
         recordBookmark: function(bookmark){
             this.rightClickedBookmark = bookmark;

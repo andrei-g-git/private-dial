@@ -29,12 +29,15 @@ export default {
     #bookmark-context-menu{
         width: 150px;
         border: solid 1px gray;
-        z-index: 99;
+        z-index: 9999;
         box-shadow: 0px 0px 15px;
+
+        position: relative;
     }
     #bookmark-context{
         width: 100%;
         padding: 5px 10px 5px 10px;
+        /* display: block; */
     }
     .menu-item{
         display: block;
