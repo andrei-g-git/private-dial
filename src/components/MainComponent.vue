@@ -138,17 +138,12 @@ export default {
         // eslint-disable-next-line no-unused-vars 
         openBookmarkContextMenu(bookmarkIndex){ //this opens the normal event first because the event listener that prevents default is added only afterwards, I think
             var menu = document.querySelector('#bookmark-context-menu');
-/*             var bookmarkItem = document.getElementById("bookmark" + bookmarkIndex);
-            bookmarkItem.addEventListener('contextmenu', event =>{ //should only be added once or destroyed after the event is fired
 
-            }); */
-                this.showContext = true;
+            this.showContext = true;
 
-                menu.style.top = event.clientY + "px";
-                menu.style.left = event.clientX + "px";
-
-                //test
-                console.log(menu.style.top.value + "     " + menu.style.left.value);
+            menu.style.top = event.clientY + "px";
+            menu.style.left = event.clientX + "px"; // so because I set the element's position probably before it can call preventDefault in it's own listener the 
+                                                    // default context menu opens first 
         },
         recordBookmark: function(bookmark){
             this.rightClickedBookmark = bookmark;
