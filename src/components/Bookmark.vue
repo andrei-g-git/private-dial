@@ -1,5 +1,6 @@
 <template>
-    <div class='bookmark-inner-wrapper'>
+    <div class='bookmark-inner-wrapper'
+        id="bookmark-inner-wrapper">
         <div class='icon-and-label' v-on:click='openWebsite(fullURL)'>
             <img id='fav-icon' v-bind:src='concatFaviconURL(getHostName())'>
             <div class='page-name'>{{ removeSubdomain(hostName) }}</div>
@@ -40,6 +41,12 @@ export default {
     created(){
         this.fullURL = this.bookmarkModel.getEnteredURL();
         this.hostName = this.extractHostName(this.fullURL);
+    },
+    mounted(){
+        var bookmarkElement = document.getElementById("bookmark-inner-wrapper");
+        bookmarkElement.addEventListener('contextmenu', event => {
+            event.preventDefault();
+        });
     }
 }
 </script>

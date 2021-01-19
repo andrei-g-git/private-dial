@@ -17,6 +17,9 @@ export default {
     methods: {
         onClickDelete: function(){
             this.$emit('clickedDeleteBookmarkMenuItem');
+        },
+        onClickEdit(){
+            this.$emit('clickedEditBookmark');
         }               
     }
 }

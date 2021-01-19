@@ -8,10 +8,12 @@
                 v-bind:groupModel='group'
                 @performSavableAction='savePrettyMuchEverything()'
                 @clickedAddBookmark='openBookmarkModal($event)'
-                @deletedBookmark="savePrettyMuchEverything()">
-                <!-- @genericAddStuff='onClickAddBookmark()'> --> <!-- from bookmark modal (grandchild) -->
+                
+                @rightClickedBookmark="openBookmarkContextMenu($event) ; 
+                    recordBookmark($event) ;
+                    recordGroupOfClickedBookmark(group)">
             </BookmarkGroup>
-        </div> <!-- v-bind:showing='showNewGroupModal' -->
+        </div> 
         <NewGroupModal  
             :saveName='saveGroupModal'
             :closeName='closeGroupModal'
@@ -21,7 +23,6 @@
             @clickedClose='closeNewFolderModal()' 
             v-show='showNewGroupModal'> 
         </NewGroupModal>
-                <!-- giving the bookmark modal below the correct bookmarks is going to be a problem because, before, it was getting it from the v-for loop above as a prop... -->
         <NewBookmarkModal
             v-show="showNewBookmarkModal"
             :bookmarkGroup="openedGroup"
@@ -37,12 +38,11 @@
                 @genericAddStuff='onClickAddGroup()'>
             </AddStuffButton> 
         </div>
-                    <!-- v-on:[addStuffButtonEvent]='onClickAddGroup()'> -->
-            <!-- v-on='{ click: onClickAddGroup()}'> -->
-            <!-- @clickedAddGroup='onClickAddGroup()'></AddStuffButton> -->
-
-            <!-- :eventName='groupButtonEmitterName' --> <!-- :emitterObject='newGroupEmitterObject' --> 
-
+        <BookmarkContextMenu 
+            v-show='showContext'
+            @clickedDeleteBookmarkMenuItem='deleteBookmark(getRightClickedBookmark())'
+            @clickedEditBookmark='editBookmark(getRightClickedBookmark())'>
+        </BookmarkContextMenu>
     </div>
 </template>
 
@@ -51,21 +51,20 @@
 import BookmarkModel from '@/js/BookmarkModel.js';
 import BookmarkGroupModel from '@/js/BookmarkGroupModel.js';
 import AllBookmarkGroups from '@/js/AllBookmarkGroups.js';
-//import Bookmark from '@/components/Bookmark.vue';
 import BookmarkGroup from '@/components/BookmarkGroup.vue';
 import NewGroupModal from '@/components/NewGroupModal.vue';
 import AddStuffButton from '@/components/AddStuffButton.vue';
-//import AddGroupEmitter from '@/js/AddGroupEmitter.js';
 import SaverAndLoader from '@/js/SaverAndLoader.js';
-import NewBookmarkModal from '@/components/NewBookmarkModal.vue'
+import NewBookmarkModal from '@/components/NewBookmarkModal.vue';
+import BookmarkContextMenu from '@/components/BookmarkContextMenu.vue';
 
 export default {
     components: {
-        //Bookmark,
         BookmarkGroup,
         NewGroupModal,
         AddStuffButton, //is this an instance?...
-        NewBookmarkModal
+        NewBookmarkModal,
+        BookmarkContextMenu
     },
     data: function(){
         return {
@@ -74,14 +73,16 @@ export default {
             addGroupButtonName: 'Add Group',
             saveGroupModal: 'Save',
             closeGroupModal: 'Close',
-            //groupButtonEmitterName: 'clickedAddGroup',
-            groupButtonImgName: /* '../assets/ */'new folder.png',
+            groupButtonImgName: 'new folder.png',
             newGroupEmitterObject: null,
             saverAndLoader: new SaverAndLoader(),
             showNewBookmarkModal: false,
             saveBookmarkButtonName: 'Save',
             indexOfRequestingGroup: 0,
-            openedGroup: null
+            openedGroup: null,
+            showContext: false,
+            rightClickedBookmark: null,
+            groupOfRightClickedBookmark: null
         }
     },
     methods: {
@@ -104,10 +105,6 @@ export default {
         closeNewBookmarkModal: function () {
             this.showNewBookmarkModal = false;
         },
-/*         onClickAddBookmark: function () {
-            //alert('added new bookmark')
-            this.showNewBookmarkModal = true;
-        }, */
         openBookmarkModal(groupIndex){
             this.showNewBookmarkModal = true;
             this.indexOfRequestingGroup = groupIndex;
@@ -131,7 +128,6 @@ export default {
                     var loadedBookmark = loadedGroup.bookmarks[j];
                     var url = loadedBookmark.enteredURL;
                     var bookmarkPlaceholder = new BookmarkModel(url);
-                    //loadedGroup.pushBookmark(bookmarkPlaceholder); --loadedGroup is just the jsonParsedObject, doesn't have functions
                     groupPlaceholder.pushBookmark(bookmarkPlaceholder);
                 }
 
@@ -139,6 +135,40 @@ export default {
             }
             return allGroupsPlaceholder;
         },
+        // eslint-disable-next-line no-unused-vars 
+        openBookmarkContextMenu(bookmarkIndex){ //this opens the normal event first because the event listener that prevents default is added only afterwards, I think
+            var menu = document.querySelector('#bookmark-context-menu');
+/*             var bookmarkItem = document.getElementById("bookmark" + bookmarkIndex);
+            bookmarkItem.addEventListener('contextmenu', event =>{ //should only be added once or destroyed after the event is fired
+
+            }); */
+                this.showContext = true;
+
+                menu.style.top = event.clientY;
+                menu.style.left = event.clientX;
+        },
+        recordBookmark: function(bookmark){
+            this.rightClickedBookmark = bookmark;
+        },
+        recordGroupOfClickedBookmark: function(passedGroup){
+            this.groupOfRightClickedBookmark = passedGroup;
+        },
+        getRightClickedBookmark: function(){
+            return this.rightClickedBookmark;
+        },
+        deleteBookmark: function(bookmarkObject){
+            this.groupOfRightClickedBookmark.getBookmarks().splice(this.getBookmarkIndex(bookmarkObject), 1); //######################################
+            this.rightClickedBookmark = null; //should be here as well
+            this.showContext = false;
+            this.savePrettyMuchEverything();
+        },
+        // eslint-disable-next-line no-unused-vars
+        editBookmark: function(bookmarkObject){
+            this.showContext = false;
+        },   
+        getBookmarkIndex: function(bookmark){
+            return this.groupOfRightClickedBookmark.getBookmarks().indexOf(bookmark); //############################################
+        },     
     },
     created() {
         var defaultGroup = new BookmarkGroupModel(0);
@@ -151,8 +181,13 @@ export default {
         if(loaded.getLength()){ //i m already doing this in the object, should remove the redundancy
             this.bookmarkGroups = loaded; // I also have to trigger the save function in the 
         }                                   // bookmark modal as well and use that thing where it emits the event to the grandparent
-        //alert(loaded + "   " + loaded.getLength());                                                       
-
+    },
+    mounted(){
+        var menu = document.querySelector('#bookmark-context-menu');
+        menu.addEventListener('mouseleave'/* 'mouseout' */, () =>{
+            this.showContext = false;
+            //this.rightClickedBookmark = null; //this might reset the clicked bookmark before a menu item is clicked
+        });
     }
 }
 </script>
