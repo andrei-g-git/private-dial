@@ -4,7 +4,7 @@
             
             @click='onClickButton()'
             :src='concatImage(imageName)'> 
-    </div><!-- 'concatWidth(buttonWidth)' --> <!-- width='buttonWidth' -->
+    </div>
 </template>
 
 <script>
@@ -20,8 +20,6 @@ export default {
     },
     methods: {
         onClickButton: function(){
-            //this.$emit(this.eventName);
-            //this.emitterObject.emitEvent();
             this.$emit('genericAddStuff');
         },
         concatImage: function(value){

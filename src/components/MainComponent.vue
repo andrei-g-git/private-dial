@@ -1,19 +1,21 @@
 <template>
     <div id='main-component'>
-        <div class='bookmark-group-wrapper'
-            v-for='(group, index) in bookmarkGroups.getGroups()'
-            v-bind:key='index'
-            v-bind:id='index'>   
-            <BookmarkGroup 
-                v-bind:groupModel='group'
-                @performSavableAction='savePrettyMuchEverything()'
-                @clickedAddBookmark='openBookmarkModal($event)'
-                
-                @rightClickedBookmark="openBookmarkContextMenu($event) ; 
-                    recordBookmark($event) ;
-                    recordGroupOfClickedBookmark(group)">
-            </BookmarkGroup>
-        </div> 
+        <div id="all-groups-container">
+            <div class='bookmark-group-wrapper'
+                v-for='(group, index) in bookmarkGroups.getGroups()'
+                v-bind:key='index'
+                v-bind:id='index'>   
+                <BookmarkGroup 
+                    v-bind:groupModel='group'
+                    @performSavableAction='savePrettyMuchEverything()'
+                    @clickedAddBookmark='openBookmarkModal($event)'
+                    
+                    @rightClickedBookmark="openBookmarkContextMenu($event) ; 
+                        recordBookmark($event) ;
+                        recordGroupOfClickedBookmark(group)">
+                </BookmarkGroup>
+            </div> 
+        </div>
         <NewGroupModal  
             :saveName='saveGroupModal'
             :closeName='closeGroupModal'
@@ -192,6 +194,14 @@ export default {
 
 <style scoped>
 
+#main-component{
+    height: 100vh;
+}
+#all-groups-container{
+    overflow-x: scroll;
+    white-space: nowrap;
+    height: 98%;
+}
 .bookmark-group-wrapper{
     display: inline-block;
     margin: 10px;
