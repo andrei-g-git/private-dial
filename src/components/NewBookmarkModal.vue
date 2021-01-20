@@ -24,7 +24,7 @@ export default {
     methods:{
         onSave: function(){
 
-            var url = document.getElementById('url-field-' + this.groupIndex); //what happens here is that each group opens it's own modal so this ID is not unique...
+            var url = document.getElementById('url-field-' + this.groupIndex); //each group opens it's own modal so this ID is not unique...
             var urlName = url.value;
 
             if(urlName.length > 0){
@@ -37,7 +37,7 @@ export default {
         },
         resetForms: function(element){
             //document.getElementById('url-field').value = ''; //Cannot set property 'value' of null ??????????????????????
-            element.value = ''; //same shit
+            element.value = ''; //same 
         }
     }
     
@@ -83,7 +83,6 @@ export default {
         margin-bottom: 30px;
         bottom: 0px;
 
-        /* float: left;  */
         left: var(--group-modal-custom-horizontal-offset);
     }
 

@@ -28,8 +28,7 @@
             >
                 <!-- The model seems to retain the correct bookmarks after one's deletion but this loop renders an incorect list... -->
                 <!-- I'm guessing it has something to do with the index not changing correctly? -->
-
-                <!-- INDEXES ARE GLOBAL so indexes from different groups will overlap (but I doubt that was causing the problem) -->
+                <!-- Indexes from different groups will overlap (but I doubt that was causing the problem) -->
                 <Bookmark :bookmarkModel="bookmark"> </Bookmark>
             </div>
         </div>
@@ -59,8 +58,7 @@ export default {
         };
     },
     props: {
-        //groupName: String, //might not need to be a prop
-        groupModel: Object, //these vue components will also have to act as controllers becuase they are easier to test that way, can't separate view from controller
+        groupModel: Object
     },
     methods: {
         getGroupIndex: function () {
@@ -117,23 +115,15 @@ export default {
 }
 .bookmark-group {
     width: 100%; 
-    /* height: 30px; */ /* .................... */
+    /* height: 30px; */
     border: solid 1px gray;
-
     display: inline-block;
-
     position: relative;
-
     margin: -1px -1px;
-
-    /* padding-bottom: 17px; */
 }
 .bookmark-button-wrapper {
     position: absolute;
-    /*left: 5;  remains at 0 */
     top: 17px;
-
-    /* width: 10%; */
     width: 20px;
     padding-left: 5px;
 }

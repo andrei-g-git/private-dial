@@ -4,8 +4,7 @@
         <menu type="context" 
             id="bookmark-context">
             <div class="menu-item"> <!-- this doesn't add the class to all menuitems, it just creates a monolithic wrapper -->
-                <menuitem @click="onClickDelete()"> Delete -hardcoded- </menuitem> <!-- The model seems to retain the correct 
-                                                                bookmarks after one's deletion but this loop renders an incorect list... -->
+                <menuitem @click="onClickDelete()"> Delete -hardcoded- </menuitem> <!-- The model seems to retain the correct bookmarks after one's deletion but this loop renders an incorect list... -->
                 <menuitem @click="onClickEdit()"> Edit -hardcoded- </menuitem>
             </div>
         </menu>
@@ -37,7 +36,6 @@ export default {
     #bookmark-context{
         width: 100%;
         padding: 5px 10px 5px 10px;
-        /* display: block; */
     }
     .menu-item{
         display: block;
@@ -47,6 +45,5 @@ export default {
     }
     .menu-item :hover{
         background-color: rgb(200, 200, 200);
-        /* color: green; */
     }   
 </style>

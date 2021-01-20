@@ -34,15 +34,8 @@ describe('BookmarkGroup', () => {
     });
 
     it('rednders the bk color stored in the model', async () => {
-        /* wrapper.destroy();
-        let wrapper = null; */
         var model = new BookmarkGroupModelMOCK(0);
         model.setColor('red');
-        /* wrappepr = shallowMount(BookmarkGroup, {
-            propsData: {
-                groupModel: model
-            }
-        }); */
 
         wrapper.setProps({
             groupModel: model
@@ -50,7 +43,7 @@ describe('BookmarkGroup', () => {
 
         var testGroup = await wrapper.find('#bookmark-group-0');
         var bgColor = testGroup.attributes().style.color;
-        expect(bgColor).toBe('red'); //this fails because I commented out the part where I reassing the color in the implementation because that causes the 
+        expect(bgColor).toBe('red'); //this fails because I commented out the part where I reassign the color in the implementation because that causes the 
                             //test to see the wrappepr as null
     });
 

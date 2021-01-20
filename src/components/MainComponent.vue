@@ -67,7 +67,7 @@ export default {
     components: {
         BookmarkGroup,
         NewGroupModal,
-        AddStuffButton, //is this an instance?...
+        AddStuffButton, 
         NewBookmarkModal,
         BookmarkContextMenu
     },
@@ -119,7 +119,7 @@ export default {
         savePrettyMuchEverything: function(){
             this.saverAndLoader.saveObject('bookmarkGroups', this.bookmarkGroups);
         },
-        loadPrettyMuchEverything: function(){ //this is bullshit I should't have to do this I went to harvard
+        loadPrettyMuchEverything: function(){
             var allGroupsPlaceholder = new AllBookmarkGroups();
             var loadedGroupsData = this.saverAndLoader.loadObject('bookmarkGroups');
             for(var i = 0; i < loadedGroupsData.groups.length; i++){
@@ -141,14 +141,13 @@ export default {
             return allGroupsPlaceholder;
         },
         // eslint-disable-next-line no-unused-vars 
-        openBookmarkContextMenu(bookmarkIndex){ //this opens the normal event first because the event listener that prevents default is added only afterwards, I think
+        openBookmarkContextMenu(bookmarkIndex){
             var menu = document.querySelector('#bookmark-context-menu');
 
             this.showContext = true;
 
             menu.style.top = event.clientY + "px";
-            menu.style.left = event.clientX + "px"; // so because I set the element's position probably before it can call preventDefault in it's own listener the 
-                                                    // default context menu opens first 
+            menu.style.left = event.clientX + "px";
         },
         recordBookmark: function(bookmark){
             this.rightClickedBookmark = bookmark;
@@ -160,8 +159,8 @@ export default {
             return this.rightClickedBookmark;
         },
         deleteBookmark: function(bookmarkObject){
-            this.groupOfRightClickedBookmark.getBookmarks().splice(this.getBookmarkIndex(bookmarkObject), 1); //######################################
-            this.rightClickedBookmark = null; //should be here as well
+            this.groupOfRightClickedBookmark.getBookmarks().splice(this.getBookmarkIndex(bookmarkObject), 1); 
+            this.rightClickedBookmark = null; 
             this.showContext = false;
             this.savePrettyMuchEverything();
         },
@@ -170,7 +169,7 @@ export default {
             this.showContext = false;
         },   
         getBookmarkIndex: function(bookmark){
-            return this.groupOfRightClickedBookmark.getBookmarks().indexOf(bookmark); //############################################
+            return this.groupOfRightClickedBookmark.getBookmarks().indexOf(bookmark);
         },     
     },
     created() {
@@ -182,14 +181,13 @@ export default {
 
         var loaded = this.loadPrettyMuchEverything();
         if(loaded.getLength()){ //i m already doing this in the object, should remove the redundancy
-            this.bookmarkGroups = loaded; // I also have to trigger the save function in the 
-        }                                   // bookmark modal as well and use that thing where it emits the event to the grandparent
+            this.bookmarkGroups = loaded; 
+        }                          
     },
     mounted(){
         var menu = document.querySelector('#bookmark-context-menu');
         menu.addEventListener('mouseleave'/* 'mouseout' */, () =>{
             this.showContext = false;
-            //this.rightClickedBookmark = null; //this might reset the clicked bookmark before a menu item is clicked
         });
     }
 }
@@ -211,8 +209,7 @@ export default {
     box-shadow: 0px 0px 5px;
 }
 #all-groups-container{
-    /* overflow-x: scroll; */
-    overflow: hidden; /* browser already has horizontal scroll bar */
+    overflow: hidden; 
     white-space: nowrap;
     /* width: 95%; */
     height: 98%;
@@ -225,7 +222,6 @@ export default {
     margin: 10px;
 }
 .add-group-button-wrapper{
-    /* width: 5%; */
     width: 50px;
     float: right;
 }

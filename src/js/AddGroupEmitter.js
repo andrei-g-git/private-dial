@@ -1,3 +1,4 @@
+//not using
 export default class AddGroupEmitter{
     constructor(vueInstance){
         this.vueInstance = vueInstance;
@@ -6,4 +7,4 @@ export default class AddGroupEmitter{
     emitEvent(){
         this.vueInstance.$emit('clickedAddGroup');
     }
-}
+} 

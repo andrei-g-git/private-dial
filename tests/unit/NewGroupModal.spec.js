@@ -13,21 +13,10 @@ afterEach(() => {
 
 describe( 'NewGroupModal',() => {
 
-/*     it('opens and closes when prompted', () => {
-        wrapper = shallowMount(NewGoroupModal, {
-            propsData: {
-                showing: true
-            }
-        });
-        const dialog = wrapper.find('.new-group-modal');
-        expect(dialog.isVisible()).toBe(true);
-    });    WILL OPEN AND CLOSE FROM THE OUTSIDE*/
-
     it('adds a new group with correct name and color', async () =>{
         wrapper = shallowMount(NewGoroupModal, {
             propsData: {
-                allGroups: new AllBookmarkGroupsMOCK(),
-                //showing: true
+                allGroups: new AllBookmarkGroupsMOCK()
             }
         });
         expect(wrapper.vm.allGroups.getLength()).toBe(0);
@@ -40,33 +29,10 @@ describe( 'NewGroupModal',() => {
 
         input = wrapper.find('#color-field');
         await input.setValue('#b96a97');
-
         await button.trigger('click');
 
-        expect(wrapper.vm.allGroups.getLength()).toBe(1); //document.getElementsByClassName('name-field').value in onSave() seems to fail silently and doesn't add a name but 
-                                                            //the new group is added. when array index [0] is included in the getElements call then the element becomes null...
-        //expect(wrappepr.vm.) nah...                                                            
+        expect(wrapper.vm.allGroups.getLength()).toBe(1);                                                            
     });
-
-/*     it('closes when click save or close and resets', async () => {          -------- no longer handles v-show
-        wrapper = shallowMount(NewGoroupModal, {
-            propsData: {
-                allGroups: new AllBookmarkGroupsMOCK(),
-                showing: true
-            }
-        });
-        var button = wrapper.find('.save-button');
-        await button.trigger('click');
-        expect(wrapper.vm.showing).toBe(false);
-
-        await wrapper.setProps({showing: false}); //??
-
-        button = wrapper.find('.close-button');
-        await button.trigger('click');
-        expect(wrapper.vm.showing).toBe(false);
-
-        //fails on elementById.reset() like the above test so I can't test if it resets...
-    }); */
 });
 
 class BookmarkGroupModelMOCK{

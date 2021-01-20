@@ -6,8 +6,7 @@ let wrapper = null;
 beforeEach(() => {
     wrapper = shallowMount(NewBookmarkModal, {
         propsData: {
-            bookmarkGroup: new BookmarkGroupModelMOCK(0),
-            //showing: true      --no v-show
+            bookmarkGroup: new BookmarkGroupModelMOCK(0)
         }
     });
 });
@@ -25,19 +24,13 @@ describe('NewBookmarkModal', () => {
         expect(wrapper.vm.bookmarkGroup.getLength()).toBe(1);
     });
 
-    /* it('closes when clicking save', async () =>{         ---doesn't handle v-show, the parent does
-        var button = wrapper.find('.save-bookmark-button');
-        await button.trigger('click');
-        expect(wrapper.vm.showing).toBe(false);
-    }); */
-
     it('resets the forms after saving or closing', async () => {
         var input = wrapper.find('#url-field');
         await input.setValue('www should be deleted dot org');
         var button = wrapper.find('.save-bookmark-button');
         await button.trigger('click');
         
-        expect(input.element.value).toBe('waaaaaaaah'); //should be '' obviously
+        expect(input.element.value).toBe('random string'); //should be '' obviously
     });
 });
 

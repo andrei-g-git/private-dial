@@ -17,9 +17,7 @@ describe('AddStuffButton', () => {
     it('sends the right click event', async () => {
 
         await wrapper.find('.add-stuff-buttton').trigger('click');
-        expect(wrapper.emitted().clickedAddGroup)./* toBeTruthy(); */toBeFalsy()
-        expect(wrapper.emitted().baaalllllllls).toBeTruthy();
+        expect(wrapper.emitted().clickedAddGroup).toBeFalsy()
+        expect(wrapper.emitted().should_be_false).toBeTruthy();
     });
-
-    /* it('') */
 });

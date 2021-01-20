@@ -34,11 +34,9 @@ export default {
         onSave: function(){
             var groupsLength = this.allGroups.getLength();
             var newGroup = new BookmarkGroupModel(groupsLength);
-
-            //var name = document.getElementsByClassName('name-field')[0].value; 
             var name = document.getElementById('name-field').value;
             var color = document.getElementById('color-field').value;
-            if((name.length > 0) || (color.length > 0)){ // ############### SHOULD BE IN THE BOOKMARK MODAL TOO ###############
+            if((name.length > 0) || (color.length > 0)){ 
                 newGroup.setName(name);
                 newGroup.setColor(color);
                 this.allGroups.pushGroup(newGroup);
@@ -67,8 +65,8 @@ export default {
         display: flex;
         top: 0;
         left: 0;
-        justify-content: center; /* this works horizontally */
-        align-items: center; /* and this vertically */
+        justify-content: center; 
+        align-items: center; 
         width: 100%;
         height: 100%;
         background-color: rgba(0, 0, 0, 0.5);

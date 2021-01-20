@@ -34,17 +34,4 @@ describe('MainComponent', () => {
         //expect(wrapper.vm.showNewGroupModal).toBe(true);
     });
 
-
-/*     it('renders only one set of groups and an add button', () => { ---------//multiple sets were made because I  included the other components in the vfor loop
-    //this should be an integration test, needs too many dependencies
-    }); */
 });
-
-/* Vue.component('NewGroupButtonMOCK', {
-    methods: {
-        onAdd: function(){
-            this.$emit('clickedAddGroup');
-        }
-    },
-    template: '<div></div>'
-}); */

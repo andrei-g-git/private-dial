@@ -19,10 +19,6 @@ describe('Bookmark', () => {
     it('opens provided url', async () => {
         global.window = { location: { pathname: null } }; //returns 'Not implemented: window.open' error (test passes), apparently I'm supposed to use the 'spy' thing
         await wrapper.find('.icon-and-label').trigger('click');
-        //setTimeout(function() {
-            //expect(global.window.location.pathname).toEqual('https://www.wikipedia.org/wiki/java');
-        //}, 
-        //100); //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! should not use settimeout() --- it probably doens't do anything -- the test runs before the timeout can finish
     });
 
     it('finds a favicon bound to the src', () => {
@@ -32,7 +28,7 @@ describe('Bookmark', () => {
         expect(favIcon.element.id).toBe('fav-icon');
 
         const faviconUrlPrefix = 'https://s2.googleusercontent.com/s2/favicons?domain=';
-        const hostName = wrapper.vm.getHostName(); //this makes the test brittle and something about white box
+        const hostName = wrapper.vm.getHostName(); //this makes the test brittle, something about white box testing
         expect(favIcon.attributes().src).toEqual(faviconUrlPrefix + hostName);
     });
 

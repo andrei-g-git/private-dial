@@ -1,7 +1,4 @@
 export default class BookmarkModelGroup {
-
-    //name; color; default = false;   'parently you can't do this
-
     constructor(index){
         this.index = index;
         this.bookmarks = new Array();
