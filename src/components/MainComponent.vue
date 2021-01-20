@@ -206,6 +206,9 @@ export default {
     position: absolute;
     padding: 5px;
     width: 60px;
+    height: 100%;
+    background-color: white;
+    box-shadow: 0px 0px 5px;
 }
 #all-groups-container{
     /* overflow-x: scroll; */
