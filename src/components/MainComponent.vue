@@ -16,6 +16,14 @@
                 </BookmarkGroup>
             </div> 
         </div>
+        <div id="right-main-area">
+            <div class='add-group-button-wrapper'>
+                <AddStuffButton 
+                    :imageName='groupButtonImgName'
+                    @genericAddStuff='onClickAddGroup()'>
+                </AddStuffButton> 
+            </div>
+        </div>
         <NewGroupModal  
             :saveName='saveGroupModal'
             :closeName='closeGroupModal'
@@ -34,12 +42,7 @@
             :saveBookmarkName='saveBookmarkButtonName'
             :groupIndex='indexOfRequestingGroup'>
         </NewBookmarkModal> 
-        <div class='add-group-button-wrapper'>
-            <AddStuffButton 
-                :imageName='groupButtonImgName'
-                @genericAddStuff='onClickAddGroup()'>
-            </AddStuffButton> 
-        </div>
+
         <BookmarkContextMenu 
             v-show='showContext'
             @clickedDeleteBookmarkMenuItem='deleteBookmark(getRightClickedBookmark())'
@@ -197,18 +200,31 @@ export default {
 #main-component{
     height: 100vh;
 }
+#right-main-area{
+    float: right;
+    right: 0;
+    position: absolute;
+    padding: 5px;
+    width: 60px;
+}
 #all-groups-container{
-    overflow-x: scroll;
+    /* overflow-x: scroll; */
+    overflow: hidden; /* browser already has horizontal scroll bar */
     white-space: nowrap;
+    /* width: 95%; */
     height: 98%;
+
+    float: left;
 }
 .bookmark-group-wrapper{
     display: inline-block;
+    vertical-align: top;
     margin: 10px;
 }
 .add-group-button-wrapper{
-        width: 5%;
-        float: right;
+    /* width: 5%; */
+    width: 50px;
+    float: right;
 }
 </style>
 

@@ -117,6 +117,7 @@ export default {
 }
 .bookmark-group {
     width: 100%; 
+    /* height: 30px; */ /* .................... */
     border: solid 1px gray;
 
     display: inline-block;
@@ -124,15 +125,20 @@ export default {
     position: relative;
 
     margin: -1px -1px;
+
+    /* padding-bottom: 17px; */
 }
 .bookmark-button-wrapper {
     position: absolute;
-    left: 0;
-    top: 50%;
+    /*left: 5;  remains at 0 */
+    top: 17px;
 
-    width: 10%;
+    /* width: 10%; */
+    width: 20px;
+    padding-left: 5px;
 }
 .group-name {
+    position: relative;
     text-align: center;
 }
 </style>
