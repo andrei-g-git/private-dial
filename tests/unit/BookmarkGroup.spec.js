@@ -43,6 +43,7 @@ describe('BookmarkGroup', () => {
 
         var testGroup = await wrapper.find('#bookmark-group-0');
         var bgColor = testGroup.attributes().style.color;
+        //var bgColor = testGroup.element.style.color;
         expect(bgColor).toBe('red'); //this fails because I commented out the part where I reassign the color in the implementation because that causes the 
                             //test to see the wrappepr as null
     });

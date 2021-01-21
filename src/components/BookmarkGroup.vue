@@ -1,11 +1,9 @@
 <template>
     <div>
         <div class="bookmark-group-container">
-            <div
-                :id="'bookmark-group-' + getGroupIndex()"
+            <div :id="'bookmark-group-' + getGroupIndex()"
                 class="bookmark-group"
-                style="background-color: white"
-            >
+                style="background-color: white">
                 <div class="bookmark-button-wrapper">
                     <AddStuffButton
                         :buttonWidth="percentWidth"
@@ -14,7 +12,16 @@
                     >
                     </AddStuffButton>
                 </div>
+
                 <p class="group-name">{{ groupName }}</p>
+
+                <div class="edit-button-wrapper">
+                    <EditGroupButton
+                        :buttonWidth="percentWidth"
+                        :imageName="editButtonImageName"
+                        @clickedEdit="onClickEdit()">
+                    </EditGroupButton>
+                </div>
             </div>
             <div
                 class="bookmark-wrapper"
@@ -36,13 +43,24 @@
 </template>
 
 <script>
+
+/* ####delete-with-hashtags-to-enable#### eslint-env jquery */
+
 import Bookmark from "@/components/Bookmark.vue";
 import AddStuffButton from "@/components/AddStuffButton.vue";
+import EditGroupButton from '@/components/EditGroupButton.vue';
+
+import $ from 'jquery';
+// eslint-disable-next-line no-unused-vars 
+import jquery from '../../node_modules/jquery/dist/jquery.js';
+// eslint-disable-next-line no-unused-vars 
+import Vue from 'vue';
 
 export default {
     components: {
         Bookmark,
-        AddStuffButton
+        AddStuffButton,
+        EditGroupButton
     },
     data: function () {
         return {
@@ -50,6 +68,7 @@ export default {
             groupName: "should change",
             headerBackgroundColor: "",
             bookmarkButtonImgName: "new folder.png",
+            editButtonImageName: "edit.png",
             percentWidth: "30%",
             showNewBookmarkModal: false,
             saveBookmarkButtonName: "Save",
@@ -66,6 +85,9 @@ export default {
         },
         onClickAddBookmark: function () {
             this.$emit("clickedAddBookmark", this.groupModel.getIndex());
+        },
+        onClickEdit: function(){
+            alert("clicked edit")
         },
         getBookmarkIndex: function (bookmark) {
             return this.bookmarks.getBookmarks().indexOf(bookmark);
@@ -94,16 +116,19 @@ export default {
         var index = this.groupModel.getIndex();
         this.headerBackgroundColor = this.groupModel.getColor();
 
-        var bookmarkGroupElement = document.getElementById(
-            "bookmark-group-" + index
-        );
-        bookmarkGroupElement.style["background-color"] = this.headerBackgroundColor; //   #### COMMENT OUT WHEN TESTING ###
+/*         var bookmarkGroupElement = document.getElementById("bookmark-group-" + index);
+        bookmarkGroupElement.style["background-color"] = this.headerBackgroundColor; */ //   #### COMMENT OUT WHEN TESTING ###
 
         //I THINK THAT IF I CHANGE THE STYLE DYNAMICALLY THEN THE COMPONENT I SHALLOWMOUNT
         //INTO THE TEST BECOMES INVALID AND THE ENTIRE THING STARTS FAILING WITH
         //'CANNOT READ PROPERTY {WHATEVER} OF NULL
         //maybe it should be in the created hook? -- won't set the color then
+
+        //trying jquery
+        $("#bookmark-group-" + index).css("background-color", this.headerBackgroundColor);
+
     },
+
 };
 </script>
 
@@ -121,14 +146,26 @@ export default {
     position: relative;
     margin: -1px -1px;
 }
-.bookmark-button-wrapper {
+.bookmark-button-wrapper, .edit-button-wrapper {
     position: absolute;
-    top: 17px;
+    /* top: 17px; */
     width: 20px;
+    
+    /* padding-top: 17px; */ /* looks like arranging the button's y position makes it intert now */
+}
+.bookmark-button-wrapper {
     padding-left: 5px;
+}
+.edit-button-wrapper {
+    padding-right: 5px;
+    right: 0;
 }
 .group-name {
     position: relative;
     text-align: center;
 }
+/* test */
+/* .bookmark-wrapper {
+    background-color: lightblue;
+} */
 </style>

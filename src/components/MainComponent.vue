@@ -195,9 +195,9 @@ export default {
 
 <style scoped>
 
-#main-component{
-    height: 100vh;
-}
+/* #main-component{
+    height: 100vh;   this causes the contextmenu to gain a big empty space on top of the menu items, which seemingly disappear 
+} */
 #right-main-area{
     float: right;
     right: 0;

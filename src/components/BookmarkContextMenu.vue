@@ -4,8 +4,9 @@
         <menu type="context" 
             id="bookmark-context">
             <div class="menu-item"> <!-- this doesn't add the class to all menuitems, it just creates a monolithic wrapper -->
-                <menuitem @click="onClickDelete()"> Delete -hardcoded- </menuitem> <!-- The model seems to retain the correct bookmarks after one's deletion but this loop renders an incorect list... -->
-                <menuitem @click="onClickEdit()"> Edit -hardcoded- </menuitem>
+                <menuitem @click="onClickDelete()"> {{ deleteItemName }} </menuitem> <!-- The model seems to retain the correct bookmarks after one's deletion but this loop renders an incorect list... -->
+                <menuitem @click="onClickEdit()"> {{ editItemName }} </menuitem> <!-- seems like the first item has a hidden height of a few hundred 
+                                                                                    pixels which causes the contextmenu to display a large empty section before the items -->
             </div>
         </menu>
     </div>
@@ -13,6 +14,16 @@
 
 <script>
 export default {
+    props:{
+        deleteItemName: {
+            type: String,
+            default: "Item A"
+        },
+        editItemName: {
+            type: String,
+            default: "Item B"
+        }
+    },
     methods: {
         onClickDelete: function(){
             this.$emit('clickedDeleteBookmarkMenuItem');
@@ -37,13 +48,11 @@ export default {
         width: 100%;
         padding: 5px 10px 5px 10px;
     }
-    .menu-item{
+    .menu-item menuitem{
         display: block;
+        margin-bottom: 5px;
     } 
-    .menuitem{
-        margin-bottom: 5px; /* doesn't work here or in the menu-item class */
-    }
-    .menu-item :hover{
+    .menu-item menuitem:hover{
         background-color: rgb(200, 200, 200);
     }   
 </style>

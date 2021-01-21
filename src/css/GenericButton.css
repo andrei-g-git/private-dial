@@ -1,0 +1,9 @@
+.generic-button{
+    width: 100%;
+}
+.generic-button:hover{
+    opacity: 0.7;
+}
+.generic-button:active{
+    opacity: 0.5;
+}

@@ -4,24 +4,24 @@
             
             @click='onClickButton()'
             :src='concatImage(imageName)'> 
-    </div>
+    </div>    
 </template>
 
 <script>
 
-import AddStuffEmitterMixin from '@/mixins/AddStuffEmitterMixin.js';
+import EditGroupEmitterMixin from '@/mixins/EditGroupEmitterMixin.js';
 import ButtonEssentialAestheticsMixin from '@/mixins/ButtonEssentialAestheticsMixin.js'; 
 
 export default {
     mixins: [
-        AddStuffEmitterMixin, 
+        EditGroupEmitterMixin, 
         ButtonEssentialAestheticsMixin
     ],
     data: function(){
         return{
-            affix: 'new folder.png'
+            affix: 'edit.png'
         }
-    },
+    },    
 }
 </script>
 
