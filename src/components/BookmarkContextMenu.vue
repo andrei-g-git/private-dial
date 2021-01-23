@@ -9,7 +9,8 @@
                                                                                     pixels which causes the contextmenu to display a large empty section before the items -->
             </div>
         </menu>
-    </div>
+    </div> <!-- FIXED - JUST NEEDE A FIXED POSITION    when this opepns the context box renders at the correct coordinates but the menuitems seem to render right below the bottom of the 
+                    bookmark group container (plus some y offset) for some reason ... maybe they're not getting the z depth -->
 </template>
 
 <script>
@@ -37,12 +38,12 @@ export default {
 
 <style scoped>
     #bookmark-context-menu{
+        background-color: white;
         width: 150px;
         border: solid 1px gray;
         z-index: 9999;
         box-shadow: 0px 0px 15px;
-
-        position: relative;
+        position: fixed;
     }
     #bookmark-context{
         width: 100%;
@@ -51,6 +52,7 @@ export default {
     .menu-item menuitem{
         display: block;
         margin-bottom: 5px;
+        /* position: relative; */
     } 
     .menu-item menuitem:hover{
         background-color: rgb(200, 200, 200);

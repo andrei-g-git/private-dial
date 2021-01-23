@@ -23,20 +23,18 @@
                     </EditGroupButton>
                 </div>
             </div>
-            <div
-                class="bookmark-wrapper"
-                v-for="(bookmark, index) in bookmarks.getBookmarks()"
-                :key="index"
-                :id="'bookmark' + getBookmarkIndex(bookmark)"
-                @click.right.stop.prevent="
-                    recordBookmark(bookmark);
-                    notifyParent();
-                "
-            >
-                <!-- The model seems to retain the correct bookmarks after one's deletion but this loop renders an incorect list... -->
-                <!-- I'm guessing it has something to do with the index not changing correctly? -->
-                <!-- Indexes from different groups will overlap (but I doubt that was causing the problem) -->
-                <Bookmark :bookmarkModel="bookmark"> </Bookmark>
+            <div class="bookmark-container"> 
+                <div class="bookmark-wrapper"
+                    v-for="(bookmark, index) in bookmarks.getBookmarks()"
+                    :key="index"
+                    :id="'bookmark' + getBookmarkIndex(bookmark)"
+                    @click.right.stop.prevent="recordBookmark(bookmark);
+                        notifyParent();">
+                    <!-- The model seems to retain the correct bookmarks after one's deletion but this loop renders an incorect list... -->
+                    <!-- I'm guessing it has something to do with the index not changing correctly? -->
+                    <!-- Indexes from different groups will overlap (but I doubt that was causing the problem) -->
+                    <Bookmark :bookmarkModel="bookmark"> </Bookmark>
+                </div>
             </div>
         </div>
     </div>
@@ -135,8 +133,17 @@ export default {
 <style scoped>
 .bookmark-group-container {
     width: 200px;
+    /* height: 90vh; */
     border: solid 1px gray;
-    display: block;
+/*     display: block;
+    overflow-y: auto;
+    overflow-x: hidden; */
+}
+.bookmark-container {
+    height: 85vh; /* looks like the bookmark contexmenu really doesn't like specifying the height of ... whatever the hell ... everything I guess */
+    display: block; /* eh maybe it's not the height, bug's still there after I comment out the height */
+    overflow-y: auto; /* I think it has something to do with rendering the contextmenu ITEMS below all the bookmark group containers */
+    overflow-x: hidden;
 }
 .bookmark-group {
     width: 100%; 
