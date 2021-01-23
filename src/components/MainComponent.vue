@@ -8,6 +8,7 @@
                 <BookmarkGroup 
                     v-bind:groupModel='group'
                     @performSavableAction='savePrettyMuchEverything()'
+                    @clickedEditGroup='openEditGroupModal($event)'
                     @clickedAddBookmark='openBookmarkModal($event)'
                     
                     @rightClickedBookmark="openBookmarkContextMenu($event) ; 
@@ -43,6 +44,17 @@
             :groupIndex='indexOfRequestingGroup'>
         </NewBookmarkModal> 
 
+        <EditGroupModal
+            v-show="showEditGroupModal"
+            :saveName="saveGroupModal"
+            :closeName="closeGroupModal"
+            :allGroups="bookmarkGroups"
+            @clickedSave='closeNewFolderModal() ;
+                savePrettyMuchEverything()'
+            @clickedClose='closeNewFolderModal()'> <!-- meh... -->
+
+        </EditGroupModal>            
+
         <BookmarkContextMenu 
             v-show='showContext'
             @clickedDeleteBookmarkMenuItem='deleteBookmark(getRightClickedBookmark())'
@@ -62,6 +74,7 @@ import AddStuffButton from '@/components/AddStuffButton.vue';
 import SaverAndLoader from '@/js/SaverAndLoader.js';
 import NewBookmarkModal from '@/components/NewBookmarkModal.vue';
 import BookmarkContextMenu from '@/components/BookmarkContextMenu.vue';
+import EditGroupModal from '@/components/EditGroupModal.vue';
 
 export default {
     components: {
@@ -69,7 +82,8 @@ export default {
         NewGroupModal,
         AddStuffButton, 
         NewBookmarkModal,
-        BookmarkContextMenu
+        BookmarkContextMenu,
+        EditGroupModal
     },
     data: function(){
         return {
@@ -82,6 +96,7 @@ export default {
             newGroupEmitterObject: null,
             saverAndLoader: new SaverAndLoader(),
             showNewBookmarkModal: false,
+            showEditGroupModal: false,
             saveBookmarkButtonName: 'Save',
             indexOfRequestingGroup: 0,
             openedGroup: null,
@@ -106,15 +121,20 @@ export default {
         },
         closeNewFolderModal: function(){
             this.showNewGroupModal = false;
+            this.showEditGroupModal = false; //meeeehhhhhhhhhh
         },
         closeNewBookmarkModal: function () {
             this.showNewBookmarkModal = false;
         },
-        openBookmarkModal(groupIndex){
+        openBookmarkModal: function(groupIndex){
             this.showNewBookmarkModal = true;
             this.indexOfRequestingGroup = groupIndex;
             this.openedGroup = this.bookmarkGroups.getGroupAt(groupIndex);
             console.log(this.openedGroup.getIndex());
+        },
+        openEditGroupModal: function(groupIndex){
+            this.showEditGroupModal = true;
+            this.indexOfRequestingGroup = groupIndex; //careful here
         },
         savePrettyMuchEverything: function(){
             this.saverAndLoader.saveObject('bookmarkGroups', this.bookmarkGroups);

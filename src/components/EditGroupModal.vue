@@ -4,19 +4,16 @@
             @clickedSaveModal="onSave()" 
             @clickedCloseModal="onClose()"
             :saveName="saveName"
-            :closeName="closeName"
-            :fieldAffix="fieldAffix">
+            :closeName="closeName">
         </modal-container>
     </div>
 </template>
 
 <script>
 
-// eslint-disable-next-line no-unused-vars 
-//import BookmarkGroupModel from '@/js/BookmarkGroupModel.js';
 import ModalContainer from '@/components/ModalContainer.vue';
 import GroupModalCommonsMixin from '@/mixins/GroupModalCommonsMixin.js';
-import NewGroupModalMixin from '@/mixins/NewGroupModalMixin.js';
+import EditGroupModalMixin from '@/mixins/NewGroupModalMixin.js';
 
 export default {
     components: {
@@ -24,13 +21,8 @@ export default {
     },
     mixins: [
         GroupModalCommonsMixin,
-        NewGroupModalMixin
-    ],
-    data: function(){
-        return{
-            fieldAffix: "new"
-        }
-    }
+        EditGroupModalMixin
+    ]
 }
 </script>
 

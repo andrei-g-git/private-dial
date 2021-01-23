@@ -85,7 +85,7 @@ export default {
             this.$emit("clickedAddBookmark", this.groupModel.getIndex());
         },
         onClickEdit: function(){
-            alert("clicked edit")
+            this.$emit("clickedEditGroup", this.groupModel.getIndex());
         },
         getBookmarkIndex: function (bookmark) {
             return this.bookmarks.getBookmarks().indexOf(bookmark);

@@ -30,4 +30,8 @@ export default class AllBookmarkGroups {
     getNameAt(index){
         return this.groups[index].getName();
     }
+
+    getColorAt(index){
+        return this.groups[index].getColor();
+    }
 }
