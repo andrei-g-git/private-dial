@@ -10,10 +10,14 @@
                 :id="'color-field-' + fieldAffix"
                 class='color-field'>            
             <button class='save-button'
-                v-on:click='onSave()'> {{ saveName }}
+                v-on:click='onSave()'
+                > <!-- {{ saveName }} -->
+                <slot name="button-name-1"> Button 1 </slot>
             </button>
             <button class='close-button'
-                v-on:click='onClose()'> {{ closeName }}
+                v-on:click='onClose()'
+                > <!-- {{ closeName }} -->
+                <slot name="button-name-2"> Button 2 </slot>
             </button>
 
         </div>
@@ -22,15 +26,15 @@
 
 <script>
 export default {
-    props: {
-        saveName: {
+     props: {
+/*         saveName: {
             type: String,
             default: "Button 1"
         },
         closeName: {
             type: String,
             default: "Button 2"
-        },
+        },  */
         fieldAffix: {
             type: String,
             default: "default"

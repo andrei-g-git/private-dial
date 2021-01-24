@@ -3,6 +3,7 @@ import BookmarkGroupModel from '@/js/BookmarkGroupModel.js';
 export default {
     methods: {
         onSave: function(){
+            alert('this should have been in the edit group mixin')
             var groupsLength = this.allGroups.getLength();
             var newGroup = new BookmarkGroupModel(groupsLength); /* should fins a way to do dependency injection */
             var name = document.getElementById('name-field-' + this.fieldAffix).value;

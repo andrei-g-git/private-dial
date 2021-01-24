@@ -3,10 +3,13 @@
         <modal-container
             @clickedSaveModal="onSave()" 
             @clickedCloseModal="onClose()"
-            :saveName="saveName"
-            :closeName="closeName"
-            :fieldAffix="fieldAffix">
-        </modal-container>
+            :fieldAffix="fieldAffix"
+            >
+
+            <template v-slot:button-name-1> Save </template>
+            <template v-slot:button-name-2> Close </template>            
+        </modal-container> <!--             :saveName="saveName"
+            :closeName="closeName" -->
     </div>
 </template>
 

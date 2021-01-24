@@ -4,9 +4,15 @@
         <menu type="context" 
             id="bookmark-context">
             <div class="menu-item"> <!-- this doesn't add the class to all menuitems, it just creates a monolithic wrapper -->
-                <menuitem @click="onClickDelete()"> {{ deleteItemName }} </menuitem> <!-- The model seems to retain the correct bookmarks after one's deletion but this loop renders an incorect list... -->
-                <menuitem @click="onClickEdit()"> {{ editItemName }} </menuitem> <!-- seems like the first item has a hidden height of a few hundred 
+                <!-- <menuitem @click="onClickDelete()"> {{ deleteItemName }} </menuitem> --> <!-- The model seems to retain the correct bookmarks after one's deletion but this loop renders an incorect list... -->
+                <!-- <menuitem @click="onClickEdit()"> {{ editItemName }} </menuitem> --> <!-- seems like the first item has a hidden height of a few hundred 
                                                                                     pixels which causes the contextmenu to display a large empty section before the items -->
+                <menuitem @click="onClickDelete()">
+                    <slot name="menu-item-1"> Item 1 </slot>
+                </menuitem>                                 
+                <menuitem @click="onClickEdit()">
+                    <slot name="menu-item-2"> Item 2 </slot>
+                </menuitem>                                                                                                    
             </div>
         </menu>
     </div> <!-- FIXED - JUST NEEDE A FIXED POSITION    when this opepns the context box renders at the correct coordinates but the menuitems seem to render right below the bottom of the 
@@ -15,7 +21,7 @@
 
 <script>
 export default {
-    props:{
+/*     props:{
         deleteItemName: {
             type: String,
             default: "Item A"
@@ -24,7 +30,7 @@ export default {
             type: String,
             default: "Item B"
         }
-    },
+    }, */
     methods: {
         onClickDelete: function(){
             this.$emit('clickedDeleteBookmarkMenuItem');

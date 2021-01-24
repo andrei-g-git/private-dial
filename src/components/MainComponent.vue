@@ -3,10 +3,10 @@
         <div id="all-groups-container">
             <div class='bookmark-group-wrapper'
                 v-for='(group, index) in bookmarkGroups.getGroups()'
-                v-bind:key='index'
-                v-bind:id='index'>   
+                :key='index'
+                :id='index'>   
                 <BookmarkGroup 
-                    v-bind:groupModel='group'
+                    :groupModel='group'
                     @performSavableAction='savePrettyMuchEverything()'
                     @clickedEditGroup='openEditGroupModal($event)'
                     @clickedAddBookmark='openBookmarkModal($event)'
@@ -25,15 +25,15 @@
                 </AddStuffButton> 
             </div>
         </div>
-        <NewGroupModal  
-            :saveName='saveGroupModal'
-            :closeName='closeGroupModal'
-            :allGroups='bookmarkGroups'
+        <NewGroupModal :allGroups='bookmarkGroups'
+
             @clickedSave='closeNewFolderModal() ;
                 savePrettyMuchEverything()'
             @clickedClose='closeNewFolderModal()' 
-            v-show='showNewGroupModal'> 
+            v-show='showNewGroupModal'> <!--             :saveName='saveGroupModal'
+            :closeName='closeGroupModal' -->            
         </NewGroupModal>
+
         <NewBookmarkModal
             v-show="showNewBookmarkModal"
             :bookmarkGroup="openedGroup"
@@ -46,12 +46,14 @@
 
         <EditGroupModal
             v-show="showEditGroupModal"
-            :saveName="saveGroupModal"
-            :closeName="closeGroupModal"
+
             :allGroups="bookmarkGroups"
             @clickedSave='closeNewFolderModal() ;
                 savePrettyMuchEverything()'
             @clickedClose='closeNewFolderModal()'> <!-- meh... -->
+
+            <!--             :saveName="saveGroupModal"
+            :closeName="closeGroupModal" -->
 
         </EditGroupModal>            
 
@@ -59,6 +61,8 @@
             v-show='showContext'
             @clickedDeleteBookmarkMenuItem='deleteBookmark(getRightClickedBookmark())'
             @clickedEditBookmark='editBookmark(getRightClickedBookmark())'>
+            <template v-slot:menu-item-1> Delete </template>
+            <template v-slot:menu-item-2> Edit </template>
         </BookmarkContextMenu>
     </div>
 </template>
@@ -90,8 +94,8 @@ export default {
             bookmarkGroups: new AllBookmarkGroups(),
             showNewGroupModal: false,
             addGroupButtonName: 'Add Group',
-            saveGroupModal: 'Save',
-            closeGroupModal: 'Close',
+/*             saveGroupModal: 'Save',
+            closeGroupModal: 'Close', */
             groupButtonImgName: 'new folder.png',
             newGroupEmitterObject: null,
             saverAndLoader: new SaverAndLoader(),

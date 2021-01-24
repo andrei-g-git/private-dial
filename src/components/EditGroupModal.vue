@@ -3,8 +3,11 @@
         <modal-container
             @clickedSaveModal="onSave()" 
             @clickedCloseModal="onClose()"
-            :saveName="saveName"
-            :closeName="closeName">
+            :fieldAffix="fieldAffix"
+            ><!--             :saveName="saveName"
+            :closeName="closeName" -->
+            <template v-slot:button-name-1> Saveee </template>
+            <template v-slot:button-name-2> Closeee </template>            
         </modal-container>
     </div>
 </template>
@@ -22,7 +25,12 @@ export default {
     mixins: [
         GroupModalCommonsMixin,
         EditGroupModalMixin
-    ]
+    ],
+    data: function(){
+        return{
+            fieldAffix: "edit"
+        }
+    }    
 }
 </script>
 

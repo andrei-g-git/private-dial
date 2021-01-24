@@ -9,12 +9,12 @@
 
 <script>
 
-import EditGroupEmitterMixin from '@/mixins/EditGroupEmitterMixin.js';
+import EditFolderEmitterMixin from '@/mixins/EditFolderEmitterMixin.js';
 import ButtonEssentialAestheticsMixin from '@/mixins/ButtonEssentialAestheticsMixin.js'; 
 
 export default {
     mixins: [
-        EditGroupEmitterMixin, 
+        EditFolderEmitterMixin, 
         ButtonEssentialAestheticsMixin
     ],
     data: function(){
